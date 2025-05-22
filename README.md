@@ -2,11 +2,12 @@
 ## BSC Testnet (ChainId 97) Addresses
 ### Defi Platform
 - CREDIWhale [0x0FBCbBDE2CE5782E90Cfa51eCF2d2415820e0196](https://testnet.bscscan.com/address/0x0FBCbBDE2CE5782E90Cfa51eCF2d2415820e0196)
-- PriceDate [0x0df754B5B4D6F28BcE0c0b3672070ef019ed91C5](https://testnet.bscscan.com/address/0x0df754B5B4D6F28BcE0c0b3672070ef019ed91C5)
+- PriceData [0x91c446D4B5e9366E159a737F0904613fF4Ac513E](https://testnet.bscscan.com/address/0x91c446D4B5e9366E159a737F0904613fF4Ac513E)
 - LPStaking [0x2E7bC1bF4dB9231B99A0ca579696B589fe704f61](https://testnet.bscscan.com/address/0x2E7bC1bF4dB9231B99A0ca579696B589fe704f61)
 - MarketingStaking [0x1d46FE52493C60bF040090c1f34b72e088cEb741](https://testnet.bscscan.com/address/0x1d46FE52493C60bF040090c1f34b72e088cEb741)
 - ModuleX [0x90bc6f6063Cd686B6a9fC016b7376D8F567Ce3a1](https://testnet.bscscan.com/address/0x90bc6f6063Cd686B6a9fC016b7376D8F567Ce3a1)
 - ProfitShare [0x8Fe88F1283b2468c5389dc381Ef5848366CBE52A](https://testnet.bscscan.com/address/0x8Fe88F1283b2468c5389dc381Ef5848366CBE52A)
+- P2PLending [0xE182ae8bEd6C7C8149080C3f476970be211B9492](https://testnet.bscscan.com/address/0xE182ae8bEd6C7C8149080C3f476970be211B9492)
 
 ### Test tokens
 - tCREDI [0x0a5bce3bc08608c9b4a4d88ba216fe203da74861](https://testnet.bscscan.com/address/0x0a5bce3bc08608c9b4a4d88ba216fe203da74861)

@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.29+commit.ab55807c"
+		"version": "0.8.30+commit.73712a01"
 	},
 	"language": "Solidity",
 	"output": {
@@ -347,6 +347,55 @@
 					},
 					{
 						"internalType": "uint8",
+						"name": "result_decimals",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "base_amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint8",
+						"name": "base_decimals",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "quote_amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "offchain_data",
+						"type": "bytes"
+					}
+				],
+				"name": "readCollateralValues",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "base_addr",
+						"type": "address"
+					},
+					{
+						"internalType": "uint8",
 						"name": "target_decimals",
 						"type": "uint8"
 					},
@@ -357,6 +406,40 @@
 					}
 				],
 				"name": "readPrice",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "base_addr",
+						"type": "address"
+					},
+					{
+						"internalType": "uint8",
+						"name": "base_decimals",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "quote_amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "offchain_data",
+						"type": "bytes"
+					}
+				],
+				"name": "readQuoteAmountToCollateralAmount",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -515,6 +598,55 @@
 					},
 					{
 						"internalType": "uint8",
+						"name": "result_decimals",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "base_amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint8",
+						"name": "base_decimals",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "quote_amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "offchain_data",
+						"type": "bytes"
+					}
+				],
+				"name": "useCollateralValues",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "base_addr",
+						"type": "address"
+					},
+					{
+						"internalType": "uint8",
 						"name": "target_decimals",
 						"type": "uint8"
 					},
@@ -525,6 +657,40 @@
 					}
 				],
 				"name": "usePrice",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "base_addr",
+						"type": "address"
+					},
+					{
+						"internalType": "uint8",
+						"name": "base_decimals",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "quote_amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "offchain_data",
+						"type": "bytes"
+					}
+				],
+				"name": "useQuoteAmountToCollateralAmount",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -632,14 +798,14 @@
 		"compilationTarget": {
 			"contracts/PriceData.sol": "PriceData"
 		},
-		"evmVersion": "cancun",
+		"evmVersion": "prague",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": false,
-			"runs": 200
+			"enabled": true,
+			"runs": 999
 		},
 		"remappings": []
 	},
@@ -725,11 +891,11 @@
 			]
 		},
 		"contracts/PriceData.sol": {
-			"keccak256": "0x98572ebc4f9983b3c19e46f26e4250d85f5827f70a30abed0b85c11128074790",
+			"keccak256": "0x89715e3dacd397cbca22991f44a74d6165fe453dea0e048590268fdc738d8163",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://85efc3bb1fc30de8ba60e56c7a3577db463128fbd05feb43a15e8a8ccea5f9ec",
-				"dweb:/ipfs/QmTV7Z1eia37HdzCqkFPEwEEbSqo8WqwRnHQhkR9tUeojb"
+				"bzz-raw://e2432f984ec427e2c3d6a6c86314551c9c9aaad5b86a5e03ed5abeab219f0529",
+				"dweb:/ipfs/QmNo3FCPuYJGkUK67MzFD6jcmfL7C4YfXiifFKX7RQ1XpD"
 			]
 		},
 		"contracts/interface/IERC20_Decimals.sol": {
@@ -738,6 +904,14 @@
 			"urls": [
 				"bzz-raw://115bf8fb67ace478f6d567c6c436816ca00b134b5c2c19379f86b1587bb6e4c8",
 				"dweb:/ipfs/QmbaEdHk666WWVTQhAoqwq2eGeiHA8XZdYhUNHmrpEpghV"
+			]
+		},
+		"contracts/interface/IPriceData.sol": {
+			"keccak256": "0xb9855aecf2b8333c53159ff404e66df0755c88e0cfbb0b82c078ba37dd38cdde",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://072584b51e006f9aab6cc19f44e1982db742e716dfc2cba20dc9a929709e23b2",
+				"dweb:/ipfs/QmQZdNRkbBpB1XncP32c9tgKZyg77GXmufsNn9afn6w4xd"
 			]
 		},
 		"contracts/oracle_utils/OffChainPriceOracle.sol": {

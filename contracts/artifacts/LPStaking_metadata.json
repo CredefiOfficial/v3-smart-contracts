@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.29+commit.ab55807c"
+		"version": "0.8.26+commit.8a97fa7a"
 	},
 	"language": "Solidity",
 	"output": {
@@ -804,11 +804,11 @@
 			]
 		},
 		"contracts/LPStaking.sol": {
-			"keccak256": "0xc48afeadf7409f61ccd5dcafe991273a686f0a3ec55e174d6e753208996b9cfb",
+			"keccak256": "0x47fbb44a4b07f9b6236a5c22b37aa6ac54876f3b83bb970ba6fabfe6c1c5b171",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://27acdf8bfc231adb486a296e4ef616276c6abb75b8d473feaf0939017cf0936f",
-				"dweb:/ipfs/QmWSCNFrpwY2CvEMRtY54eUi8jReQCVyHRk8Qr9BMKUBHm"
+				"bzz-raw://cc21a2ec374aed6f2d58ee068889ccca6597109935d50795897c339e6b0ddd3c",
+				"dweb:/ipfs/QmYAybfeWZQgfUPvWoHoWhuaXeH6LrTAjp1827qQitaUSd"
 			]
 		},
 		"contracts/interface/ICREDIWhale.sol": {

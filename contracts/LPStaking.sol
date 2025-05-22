@@ -141,12 +141,12 @@ contract LPStaking is Ownable, LPValue
         require(pool.apy > 0, "LPStaking:Pool is paused!");
         IERC20(pool.staking_token).safeTransferFrom(_msgSender(), address(this), stake_amount); 
         uint stake_value = lp_value(pool.staking_token, stake_amount, pool.price_oracle, token0_price_data, token1_price_data);
-        uint reward_amount = stake_value*pool.apy/10000;
+        uint reward_amount = stake_value*pool.apy/10000*pool.maturity/(365 days);
         uint required_CREDI = 0;
         if(CREDI_WHALE_ORACLE.isWhale(_msgSender()))
         {
             required_CREDI = CREDI_WHALE_ORACLE.whaleThreshold();
-            reward_amount += stake_value*pool.whales_bonus_apy/10000;
+            reward_amount += stake_value*pool.whales_bonus_apy/10000*pool.maturity/(365 days);
         }
 
         uint96 maturity = time_now() + pool.maturity;

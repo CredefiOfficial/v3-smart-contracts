@@ -5,16 +5,17 @@ import {AggregatorV3Interface} from "@chainlink/contracts@1.2.0/src/v0.8/shared/
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./oracle_utils/OffChainPriceOracle.sol";
 import "./interface/IERC20_Decimals.sol";
+import "./interface/IPriceData.sol";
 
-contract PriceData is Ownable, OffChainPriceOracle
+contract PriceData is IPriceData, Ownable, OffChainPriceOracle
 {
     mapping (address => address[]) public path_mul;
     mapping (address => address[]) public path_div;
     mapping (address => bool) public isOnchainOracle;
 
-    uint8 constant public PRECISION = 18;
-    address immutable public QUOTE_ADDRESS;
-    uint8 immutable public QUOTE_DECIMALS;
+    uint8 constant public PRECISION = 20;
+    address immutable public QUOTE_ADDRESS = 0xafD8A07AB35Cf9aCAbadB5f13a83d711DEbEC0B9;
+    uint8 immutable public QUOTE_DECIMALS = 8;
     
     event OnChainOracleAdded(address indexed base_token, address[] mul_path, address[] div_path);
     event PriceLog(address indexed base_token, uint price, uint decimals);
@@ -108,6 +109,18 @@ contract PriceData is Ownable, OffChainPriceOracle
         return base_amount*price/(10**base_decimals)*(10**QUOTE_DECIMALS)/(10**PRECISION);
     }
 
+    function readQuoteAmountToCollateralAmount(address base_addr, uint8 base_decimals, uint quote_amount, bytes calldata offchain_data) external view returns(uint) 
+    {
+        uint price = readPrice(base_addr, PRECISION, offchain_data);
+        return (10**PRECISION)*quote_amount/price*(10**base_decimals)/(10**QUOTE_DECIMALS);
+    }
+
+    function useQuoteAmountToCollateralAmount(address base_addr, uint8 base_decimals, uint quote_amount, bytes calldata offchain_data) external returns(uint) 
+    {
+        uint price = usePrice(base_addr, PRECISION, offchain_data);
+        return (10**PRECISION)*quote_amount/price*(10**base_decimals)/(10**QUOTE_DECIMALS);
+    }
+
     function readRelativeCollateralValue(address base_addr, uint8 result_decimals, uint base_amount, uint8 base_decimals, uint quote_amount, bytes calldata offchain_data) external view returns(uint) 
     {
         uint value = readAbsoluteCollateralValue(base_addr, base_amount, base_decimals, offchain_data);
@@ -118,6 +131,18 @@ contract PriceData is Ownable, OffChainPriceOracle
     {
         uint value = useAbsoluteCollateralValue(base_addr, base_amount, base_decimals, offchain_data);
         return (10**result_decimals)*value/quote_amount;
+    }
+
+    function readCollateralValues(address base_addr, uint8 result_decimals, uint base_amount, uint8 base_decimals, uint quote_amount, bytes calldata offchain_data) external view returns(uint, uint)
+    {
+        uint absolute_value = readAbsoluteCollateralValue(base_addr, base_amount, base_decimals, offchain_data);
+        return (absolute_value, (10**result_decimals)*absolute_value/quote_amount); 
+    }
+
+    function useCollateralValues(address base_addr, uint8 result_decimals, uint base_amount, uint8 base_decimals, uint quote_amount, bytes calldata offchain_data) external returns(uint, uint)
+    {
+        uint absolute_value = useAbsoluteCollateralValue(base_addr, base_amount, base_decimals, offchain_data);
+        return (absolute_value, (10**result_decimals)*absolute_value/quote_amount); 
     }
 
     function setOracles(address base_addr, address[] calldata mul, address[] calldata div) external onlyOwner
