@@ -459,61 +459,6 @@
 				"inputs": [
 					{
 						"indexed": true,
-						"internalType": "uint256",
-						"name": "loan_id",
-						"type": "uint256"
-					},
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "borrower",
-						"type": "address"
-					},
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "collateral_token",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "collateral_amount",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "loan_requested",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint96",
-						"name": "apy",
-						"type": "uint96"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint96",
-						"name": "loan_duration",
-						"type": "uint96"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint96",
-						"name": "fill_deadline",
-						"type": "uint96"
-					}
-				],
-				"name": "LoanRequested",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": true,
 						"internalType": "address",
 						"name": "previousOwner",
 						"type": "address"
@@ -526,74 +471,6 @@
 					}
 				],
 				"name": "OwnershipTransferred",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "staking_token",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "rewards_token",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint96",
-						"name": "start_epoch",
-						"type": "uint96"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "scale_factor",
-						"type": "uint256"
-					}
-				],
-				"name": "PoolCreated",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "stake_amount",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "reward_rate",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "reward_rate_cumsum",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint96",
-						"name": "last_update_epoch",
-						"type": "uint96"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint96",
-						"name": "end_epoch",
-						"type": "uint96"
-					}
-				],
-				"name": "PoolUpdated",
 				"type": "event"
 			},
 			{
@@ -613,63 +490,6 @@
 					}
 				],
 				"name": "Repay",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "RewardAdded",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "stake_id",
-						"type": "uint256"
-					},
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "user",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "RewardPaid",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "to",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "RewardWithdrawn",
 				"type": "event"
 			},
 			{
@@ -794,25 +614,6 @@
 				"inputs": [
 					{
 						"indexed": false,
-						"internalType": "uint96",
-						"name": "duration",
-						"type": "uint96"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint32",
-						"name": "multiplier",
-						"type": "uint32"
-					}
-				],
-				"name": "SetMultiplier",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
 						"internalType": "address",
 						"name": "PRICE_ORACLE",
 						"type": "address"
@@ -845,80 +646,6 @@
 					}
 				],
 				"name": "SetTargetRelativeValue",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "stake_id",
-						"type": "uint256"
-					},
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "user",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "real_stake_amount",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "stake_amount",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "reward_amount",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "reward_rate_cumsum",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint96",
-						"name": "maturity",
-						"type": "uint96"
-					}
-				],
-				"name": "StakeUpdated",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "stake_id",
-						"type": "uint256"
-					},
-					{
-						"indexed": true,
-						"internalType": "address",
-						"name": "user",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					}
-				],
-				"name": "StakeWithdrawn",
 				"type": "event"
 			},
 			{
@@ -1757,8 +1484,32 @@
 						"type": "uint256"
 					},
 					{
+						"internalType": "bytes",
+						"name": "offchain_price_data",
+						"type": "bytes"
+					}
+				],
+				"name": "isCollateralClaimable",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "uint256",
-						"name": "lots",
+						"name": "loan_id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "target_lots",
 						"type": "uint256"
 					},
 					{
@@ -1776,99 +1527,6 @@
 					}
 				],
 				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"name": "loan_conditions",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "lots_required",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "lot_size",
-						"type": "uint256"
-					},
-					{
-						"internalType": "contract IPriceData",
-						"name": "price_oracle",
-						"type": "address"
-					},
-					{
-						"internalType": "uint96",
-						"name": "duration",
-						"type": "uint96"
-					},
-					{
-						"internalType": "uint32",
-						"name": "apy",
-						"type": "uint32"
-					},
-					{
-						"internalType": "uint32",
-						"name": "target_relative_value",
-						"type": "uint32"
-					},
-					{
-						"internalType": "uint32",
-						"name": "liquidation_relative_value",
-						"type": "uint32"
-					},
-					{
-						"internalType": "uint96",
-						"name": "fill_deadline",
-						"type": "uint96"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"name": "loan_state",
-				"outputs": [
-					{
-						"internalType": "address",
-						"name": "borrower",
-						"type": "address"
-					},
-					{
-						"internalType": "uint96",
-						"name": "deadline",
-						"type": "uint96"
-					},
-					{
-						"internalType": "uint256",
-						"name": "collateral_balance",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "USDC_balance",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint96",
-						"name": "claim_deadline",
-						"type": "uint96"
-					}
-				],
-				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -2619,11 +2277,11 @@
 			]
 		},
 		"contracts/P2PLending.sol": {
-			"keccak256": "0x12b6fa99fafb7f2d0cbd655406104e7feff1b06cee32d35ec167f99c561d2960",
+			"keccak256": "0xa8f9a57e6b4dd2a9f97c45e670ff3f47447bb9ceb470105a12b113eb79110a58",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://3b0cce0f546c3575b4084f674478d0dc4039337223b590680aeeb020bcb3868b",
-				"dweb:/ipfs/Qma2Gz2rgooXfu2nax9Mxk9apiwwqdALmk2WWtfjA5TAhL"
+				"bzz-raw://c23c115e99da306ca9b1b63d67dc4895b65607638d4534699c508b72385be115",
+				"dweb:/ipfs/QmSA2K4gEMZkZyzRsYH8nTbu3WjmPmYGqokhTJGQxWddku"
 			]
 		},
 		"contracts/interface/IERC20_Decimals.sol": {
@@ -2635,11 +2293,11 @@
 			]
 		},
 		"contracts/interface/IP2PLending.sol": {
-			"keccak256": "0xf6d2981e7d1faa6b3297db38ccd6c8716bcf66c83dd8b61012b978a4f455453b",
+			"keccak256": "0x45112c7dba6809beceb619f48aa2ef0e10af25214087acdc0df515a03a08f828",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://c633ca27a6260c668e9578b9a4786e4ea919326141639ee8fde910c22f807bbe",
-				"dweb:/ipfs/QmUXVqtuXNBEQVm1J3S4qexGrH24qB5icf7Han5LN8A25A"
+				"bzz-raw://32faf3a5ce1041cba93c6a9b84ccc43c03fac87cccd69e9ae50c9a7b6a6be976",
+				"dweb:/ipfs/QmRDh5bvKhRRqUSfNqv9p44EwiZ9JVi8P9tuFKCy3wKWfF"
 			]
 		},
 		"contracts/interface/IPriceData.sol": {

@@ -33,44 +33,14 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
     IPriceData public PRICE_ORACLE;
 
     address immutable public COLLATERAL;
-    uint8 immutable COLLATERAL_DECIMALS;
+    uint8 immutable private COLLATERAL_DECIMALS;
     IERC20 immutable public USDC; 
 
-    mapping (uint => LoanConditions) public loan_conditions;
-    mapping (uint => LoanState) public loan_state;
+    mapping (uint => LoanConditions) private loan_conditions;
+    mapping (uint => LoanState) private loan_state;
     uint private next_loan_id = 1;
-    mapping (address => mapping(uint => uint96)) private _withdraw_cooldown;  
+    mapping (address => mapping(uint => uint96)) private _withdraw_cooldown;
 
-    event SetLotSize(uint LOT_SIZE);
-    event SetMinLotsAmount(uint32 MIN_LOTS_AMOUNT);
-    event SetMinDuration(uint32 MIN_LOTS_AMOUNT);
-    event SetMaxDuration(uint32 MIN_LOTS_AMOUNT);
-    event SetMinFillDuration(uint32 MIN_FILL_DURATION);
-    event SetMinAPY(uint32 MIN_APY);
-    event SetMaxAPY(uint32 MAX_APY);
-    event SetTargetRelativeValue(uint32 TARGET_RELATIVE_VALUE);
-    event SetLiquidationRelativeValue(uint32 LIQUIDATION_RELATIVE_VALUE);
-    event SetProtocolFee(uint32 PROTOCOL_FEE);
-    event SetFeesCollector(address FEES_COLLECTOR);
-    event SetPriceOracle(address PRICE_ORACLE);
-
-
-    event LoanRequested(uint indexed loan_id, address indexed borrower, address indexed collateral_token, uint collateral_amount, uint loan_requested, uint96 apy, uint96 loan_duration, uint96 fill_deadline);
-    event RewardAdded(uint amount);
-    event RewardWithdrawn(address indexed to, uint amount);
-    event PoolCreated(address staking_token, address rewards_token, uint96 start_epoch, uint scale_factor);
-    event PoolUpdated(uint stake_amount, uint reward_rate, uint reward_rate_cumsum, uint96 last_update_epoch, uint96 end_epoch);
-    event StakeUpdated(uint stake_id, address indexed user, uint real_stake_amount, uint stake_amount, uint reward_amount, uint reward_rate_cumsum, uint96 maturity);
-    event StakeWithdrawn(uint stake_id, address indexed user, uint amount);
-    event RewardPaid(uint stake_id, address indexed user, uint amount);
-    event SetMultiplier(uint96 duration, uint32 multiplier);
-    
-    modifier validate_loan(uint loan_id) 
-    {
-        require(loan_id > 0 && loan_id < next_loan_id, "Invalid Loan ID!");
-        _;
-    }
-    
     constructor(address _price_oracle_address, address _COLLATERAL, address _USDC, address _FEES_COLLECTOR, string memory _erc1155_uri) Ownable(_msgSender()) ERC1155(_erc1155_uri)
     { 
         PRICE_ORACLE = IPriceData(_price_oracle_address);
@@ -78,6 +48,12 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
         COLLATERAL_DECIMALS = IERC20_Decimals(COLLATERAL).decimals();
         USDC = IERC20(_USDC);
         FEES_COLLECTOR = _FEES_COLLECTOR;
+    }
+
+    modifier validate_loan(uint loan_id) 
+    {
+        require(loan_id > 0 && loan_id < next_loan_id, "Invalid Loan ID!");
+        _;
     }
 
     function time_now() private view returns(uint96)
@@ -224,17 +200,17 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
         return next_loan_id++;
     }
 
-    function lend(uint loan_id, uint lots, uint min_lots) external nonReentrant validate_loan(loan_id) returns(uint)
+    function lend(uint loan_id, uint target_lots, uint min_lots) external nonReentrant validate_loan(loan_id) returns(uint)
     {
-        require(lots > 0 && lots >= min_lots, "P2PLending require:lots>0 && lots>=min_lots");
+        require(target_lots > 0 && target_lots >= min_lots, "P2PLending require:target_lots>0 && lots>=min_lots");
         require(getLoanStatus(loan_id) == LoanStatus.FINANCING, "P2PLending:LoanStatus not equals FINANCING!");
 
         LoanConditions storage conditions = loan_conditions[loan_id];
         uint available_lots = conditions.lots_required - totalSupply(loan_id);
         require(available_lots >= min_lots, "P2PLending:Not enough available lots!");
-        uint final_lots = Math.min(lots, available_lots);
-        USDC.safeTransferFrom(_msgSender(), address(this), conditions.lot_size*final_lots);
-        _mint(_msgSender(), loan_id, final_lots, "");
+        uint lots = Math.min(target_lots, available_lots);
+        USDC.safeTransferFrom(_msgSender(), address(this), conditions.lot_size*lots);
+        _mint(_msgSender(), loan_id, lots, "");
         require(totalSupply(loan_id) <= conditions.lots_required, "P2PLending require:supply<=lots_required");
         uint96 epoch_now = time_now();
         if(totalSupply(loan_id) == conditions.lots_required)
@@ -247,8 +223,8 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
             _withdraw_cooldown[_msgSender()][loan_id] = epoch_now + WITHDRAW_COOLDOWN;
         }
 
-        emit Lend(loan_id, _msgSender(), final_lots);
-        return final_lots;
+        emit Lend(loan_id, _msgSender(), lots);
+        return lots;
     }
 
     function borrow(uint loan_id, uint min_lots, uint max_lots, bool transfer_collateral, uint max_collateral_out,  bytes calldata offchain_price_data) external nonReentrant validate_loan(loan_id) returns(uint)
@@ -369,7 +345,7 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
         require(getLoanStatus(loan_id) == LoanStatus.ACTIVE, "P2PLending:LoanStatus must equals ACTIVE!");
         LoanConditions storage conditions = loan_conditions[loan_id];
         LoanState storage state = loan_state[loan_id];
-        require(state.deadline < time_now() || conditions.price_oracle.useRelativeCollateralValue(COLLATERAL, RATIOS_DECIMALS, state.collateral_balance, COLLATERAL_DECIMALS, getDebt(loan_id), offchain_price_data) < LIQUIDATION_RELATIVE_VALUE, "P2PLending:Cannot Liquidate!");      
+        require(state.deadline < time_now() || conditions.price_oracle.useRelativeCollateralValue(COLLATERAL, RATIOS_DECIMALS, state.collateral_balance, COLLATERAL_DECIMALS, getDebt(loan_id), offchain_price_data) < conditions.liquidation_relative_value, "P2PLending:Cannot Liquidate!");      
         uint loan_tokens_amount = balanceOf(_msgSender(), loan_id);
         require(loan_tokens_amount > 0, "P2PLending:Nothing to claim!");
         
@@ -382,8 +358,23 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
         emit_state_updated(loan_id);
     }
 
+    function isCollateralClaimable(uint loan_id, bytes calldata offchain_price_data) external view returns(bool)
+    {
+        if(!(loan_id > 0 && loan_id < next_loan_id)
+            || getLoanStatus(loan_id) != LoanStatus.ACTIVE
+            || !(loan_state[loan_id].deadline < time_now() || loan_conditions[loan_id].price_oracle.readRelativeCollateralValue(COLLATERAL, RATIOS_DECIMALS, loan_state[loan_id].collateral_balance, COLLATERAL_DECIMALS, getDebt(loan_id), offchain_price_data) < loan_conditions[loan_id].liquidation_relative_value))
+        {
+            return false;
+        }
+        else 
+        {
+            return true;
+        }
+    }
+
     function getRelativeCollateralValue(uint loan_id, bytes calldata offchain_price_data) external validate_loan(loan_id) view returns(uint)
     {
+        require(getLoanStatus(loan_id) == LoanStatus.ACTIVE, "P2PLending:LoanStatus must equals ACTIVE!");
         return loan_conditions[loan_id].price_oracle.readRelativeCollateralValue(COLLATERAL, RATIOS_DECIMALS, loan_state[loan_id].collateral_balance, COLLATERAL_DECIMALS, getDebt(loan_id), offchain_price_data);
     }
 
