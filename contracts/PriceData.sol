@@ -14,8 +14,8 @@ contract PriceData is IPriceData, Ownable, OffChainPriceOracle
     mapping (address => bool) public isOnchainOracle;
 
     uint8 constant public PRECISION = 20;
-    address immutable public QUOTE_ADDRESS = 0xafD8A07AB35Cf9aCAbadB5f13a83d711DEbEC0B9;
-    uint8 immutable public QUOTE_DECIMALS = 8;
+    address immutable public QUOTE_ADDRESS;
+    uint8 immutable public QUOTE_DECIMALS;
     
     event OnChainOracleAdded(address indexed base_token, address[] mul_path, address[] div_path);
     event PriceLog(address indexed base_token, uint price, uint decimals);

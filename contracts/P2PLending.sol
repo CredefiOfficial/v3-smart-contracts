@@ -17,18 +17,18 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
     using SafeERC20 for IERC20;
     
     uint96 constant public CLAIM_PERIOD = 1 days;
-    uint8 constant public RATIOS_DECIMALS = 5;
+    uint8 constant public RATIOS_DECIMALS = 4;
     uint96 constant public WITHDRAW_COOLDOWN = 60 seconds;
     uint public LOT_SIZE = 1e9; // 10 USDC
     uint32 public MIN_LOTS_AMOUNT = 10;
     uint32 public MIN_DURATION = 7; // days
     uint32 public MAX_DURATION = 730; // days
     uint32 public MIN_FILL_DURATION = 1; // days   
-    uint32 public MIN_APY = 1000; // 1000 = 1%
-    uint32 public MAX_APY = 1000000; // 1000% 
-    uint32 public TARGET_RELATIVE_VALUE = 130000; // 130%
-    uint32 public LIQUIDATION_RELATIVE_VALUE = 115000; // 115%
-    uint32 public PROTOCOL_FEE = 1500; // 1.5%
+    uint32 public MIN_APY = 100; // 100 = 1%
+    uint32 public MAX_APY = 100000; // 1000% 
+    uint32 public TARGET_RELATIVE_VALUE = 13000; // 130%
+    uint32 public LIQUIDATION_RELATIVE_VALUE = 11500; // 115%
+    uint32 public PROTOCOL_FEE = 150; // 1.5%
     address public FEES_COLLECTOR; 
     IPriceData public PRICE_ORACLE;
 
