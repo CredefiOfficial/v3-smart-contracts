@@ -166,9 +166,9 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
         emit_state_updated(next_loan_id);
         return next_loan_id++;
     }
-      
+
     function createAsLender(uint lots, uint32 collateral_value, uint32 duration_days, uint32 apy) external nonReentrant returns(uint)
-    {      
+    {
         require(lots >= MIN_LOTS_AMOUNT 
             && collateral_value >= TARGET_RELATIVE_VALUE
             && duration_days >= MIN_DURATION && duration_days <= MAX_DURATION
@@ -284,7 +284,19 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
         state.collateral_balance = 0;
 
         emit Repay(loan_id, required_USDC);
-        emit_state_updated(loan_id); 
+        emit_state_updated(loan_id);
+    }
+
+    function increaseCollateral(uint loan_id, uint collateral_amount) external nonReentrant validate_loan(loan_id)
+    {
+        require(getLoanStatus(loan_id) == LoanStatus.ACTIVE, "P2PLending:LoanStatus must equals ACTIVE!");
+        LoanState storage state = loan_state[loan_id];
+        require(state.borrower == _msgSender(), "P2PLending:Caller is not owner!");
+        IERC20(COLLATERAL).safeTransferFrom(state.borrower, address(this), collateral_amount);
+        state.collateral_balance += collateral_amount;
+
+        emit IncreaseCollateral(loan_id, collateral_amount);
+        emit_state_updated(loan_id);
     }
 
     function withdrawCollateral(uint loan_id) external nonReentrant validate_loan(loan_id)
@@ -366,7 +378,7 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
         {
             return false;
         }
-        else 
+        else
         {
             return true;
         }

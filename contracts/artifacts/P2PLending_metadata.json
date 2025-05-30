@@ -435,6 +435,25 @@
 					{
 						"indexed": true,
 						"internalType": "uint256",
+						"name": "load_id",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "collateral_amount",
+						"type": "uint256"
+					}
+				],
+				"name": "IncreaseCollateral",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "uint256",
 						"name": "loan_id",
 						"type": "uint256"
 					},
@@ -1455,6 +1474,24 @@
 			{
 				"inputs": [
 					{
+						"internalType": "uint256",
+						"name": "loan_id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "collateral_amount",
+						"type": "uint256"
+					}
+				],
+				"name": "increaseCollateral",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
 						"internalType": "address",
 						"name": "account",
 						"type": "address"
@@ -2277,11 +2314,11 @@
 			]
 		},
 		"contracts/P2PLending.sol": {
-			"keccak256": "0xa8f9a57e6b4dd2a9f97c45e670ff3f47447bb9ceb470105a12b113eb79110a58",
+			"keccak256": "0x110b526e647efff21c336b5b355f95469da1f3229b88e08402581723f2d06af6",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://c23c115e99da306ca9b1b63d67dc4895b65607638d4534699c508b72385be115",
-				"dweb:/ipfs/QmSA2K4gEMZkZyzRsYH8nTbu3WjmPmYGqokhTJGQxWddku"
+				"bzz-raw://4083bd4288157e493f6789ff5f6b289b0e821200e662339c5045a23dcd16706b",
+				"dweb:/ipfs/Qmc8iUsgzDtV5kiaoJJPRUEUp73Cb31BvkkF8Aou8hszHm"
 			]
 		},
 		"contracts/interface/IERC20_Decimals.sol": {
@@ -2293,11 +2330,11 @@
 			]
 		},
 		"contracts/interface/IP2PLending.sol": {
-			"keccak256": "0x45112c7dba6809beceb619f48aa2ef0e10af25214087acdc0df515a03a08f828",
+			"keccak256": "0x5495b322c952334d152d4169fce5825fd515a2b7aa210d616c0ef303445e53a7",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://32faf3a5ce1041cba93c6a9b84ccc43c03fac87cccd69e9ae50c9a7b6a6be976",
-				"dweb:/ipfs/QmRDh5bvKhRRqUSfNqv9p44EwiZ9JVi8P9tuFKCy3wKWfF"
+				"bzz-raw://e2129638400d8805977334acedace223afbb551d73f93874c52669899a21cfc6",
+				"dweb:/ipfs/QmXXC73HT6asKFr9c4fzjABYcFFsCQdFRzWi9NbX2nRSkj"
 			]
 		},
 		"contracts/interface/IPriceData.sol": {
