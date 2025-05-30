@@ -804,8 +804,8 @@
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": true,
-			"runs": 999
+			"enabled": false,
+			"runs": 200
 		},
 		"remappings": []
 	},
@@ -891,11 +891,11 @@
 			]
 		},
 		"contracts/PriceData.sol": {
-			"keccak256": "0x89715e3dacd397cbca22991f44a74d6165fe453dea0e048590268fdc738d8163",
+			"keccak256": "0xdf4e429502284c9a78fddf60765dd82e65085a9d7cdaa91f9ee69326e96786ed",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e2432f984ec427e2c3d6a6c86314551c9c9aaad5b86a5e03ed5abeab219f0529",
-				"dweb:/ipfs/QmNo3FCPuYJGkUK67MzFD6jcmfL7C4YfXiifFKX7RQ1XpD"
+				"bzz-raw://c9bc0d50a81677b75f5a53934e8b893da2169123f981e4f6caad7139d028c068",
+				"dweb:/ipfs/QmNvw3P1vrwninBbuDxHFSH3Akjhf6v7GGNNZDPMpJFPjy"
 			]
 		},
 		"contracts/interface/IERC20_Decimals.sol": {
@@ -915,11 +915,11 @@
 			]
 		},
 		"contracts/oracle_utils/OffChainPriceOracle.sol": {
-			"keccak256": "0x92522726ef5554c65c257521481c20366b336a3c8cb343f139cb93da552a633a",
+			"keccak256": "0xd0e542bf08fd6d95e5f2a563645156fe116050e3507d28cba1ee87b61d535974",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ccd591dea45752432bd81d54cc38158f5bc5f541acc06b40c666d09c5f124c06",
-				"dweb:/ipfs/QmNmWuuH81mZPZBFDSNXUK6RtRHFGEQX1Xz613K7aMcu2Y"
+				"bzz-raw://0b74fe81afa0fc2b9bf72873e3e71fca308c0e3ce1b4be59627aa40fad55804a",
+				"dweb:/ipfs/QmPdWFzL6jz5LHUWsVSWsnKyE2dj7en7JnNJFfZbGwroa8"
 			]
 		}
 	},
