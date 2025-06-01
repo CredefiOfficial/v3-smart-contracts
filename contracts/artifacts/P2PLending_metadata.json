@@ -2314,11 +2314,11 @@
 			]
 		},
 		"contracts/P2PLending.sol": {
-			"keccak256": "0x110b526e647efff21c336b5b355f95469da1f3229b88e08402581723f2d06af6",
+			"keccak256": "0x057df2ed06488c1561ae03ec2619353b8c37fe89816dfeea64d9d7cc4a475705",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://4083bd4288157e493f6789ff5f6b289b0e821200e662339c5045a23dcd16706b",
-				"dweb:/ipfs/Qmc8iUsgzDtV5kiaoJJPRUEUp73Cb31BvkkF8Aou8hszHm"
+				"bzz-raw://aa1fd034332a5435ee58317558015a8ec7bd08952ed0cbe1ed49327ce22c1ced",
+				"dweb:/ipfs/QmZHb1Rw66LnWBhUN4xxQREBhLWSFQR6uNGyBj7z196upA"
 			]
 		},
 		"contracts/interface/IERC20_Decimals.sol": {

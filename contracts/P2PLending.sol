@@ -131,7 +131,7 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
     }
 
     function createAsBorrower(uint lots, uint max_collateral_out, uint32 collateral_value, uint32 duration_days, uint32 apy, uint32 fill_duration_days, bytes calldata offchain_price_data) external nonReentrant returns(uint)
-    {      
+    {
         require(lots >= MIN_LOTS_AMOUNT 
             && collateral_value >= TARGET_RELATIVE_VALUE
             && duration_days >= MIN_DURATION && duration_days <= MAX_DURATION
@@ -141,7 +141,7 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
         uint USDC_amount = LOT_SIZE*lots;
         uint collateral_amount = collateral_value*usdc_to_collateral(USDC_amount, PRICE_ORACLE, offchain_price_data)/10**RATIOS_DECIMALS;
         require(max_collateral_out >= collateral_amount && collateral_amount > 0, "P2PLending:Increase max_collateral_out!");
- 
+
         IERC20(COLLATERAL).safeTransferFrom(_msgSender(), address(this), collateral_amount);
         loan_conditions[next_loan_id] = LoanConditions({ 
             lots_required: lots,
@@ -232,9 +232,9 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
         LoanConditions storage conditions = loan_conditions[loan_id];
         LoanState storage state = loan_state[loan_id];
         {
-        uint available_lots = totalSupply(loan_id); 
+        uint available_lots = totalSupply(loan_id);
         require(min_lots>0 && available_lots >= min_lots && available_lots <= max_lots,"P2PLending require:0<min_lots<=supply<=max_lots");
-        LoanStatus status = getLoanStatus(loan_id);  
+        LoanStatus status = getLoanStatus(loan_id);
         require(status == LoanStatus.FINANCING || status == LoanStatus.FULLY_FUNDED, "P2PLending:Cannot borrow!");     
         require(state.borrower == _msgSender() || state.borrower == address(0), "P2PLending:Caller is not owner!");
         
