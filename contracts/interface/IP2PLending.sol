@@ -42,7 +42,7 @@ interface IP2PLending
     event FullyFunded(uint indexed loan_id, uint96 claim_deadline);
     event Lend(uint indexed loan_id, address indexed lender, uint lots);
     event Borrow(uint indexed loan_id, uint lots);
-    event Repay(uint indexed load_id, uint USDC_amount);
+    event Repay(uint indexed loan_id, uint USDC_amount);
     event IncreaseCollateral(uint indexed load_id, uint collateral_amount);
     event WithdrawCollateral(uint indexed load_id);
     event WithdrawUSDC(uint indexed loan_id, address indexed lender, uint lots);

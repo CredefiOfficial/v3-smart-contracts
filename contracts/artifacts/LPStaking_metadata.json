@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.26+commit.8a97fa7a"
+		"version": "0.8.30+commit.73712a01"
 	},
 	"language": "Solidity",
 	"output": {
@@ -720,13 +720,13 @@
 		"compilationTarget": {
 			"contracts/LPStaking.sol": "LPStaking"
 		},
-		"evmVersion": "cancun",
+		"evmVersion": "prague",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": false,
+			"enabled": true,
 			"runs": 200
 		},
 		"remappings": []
@@ -828,11 +828,11 @@
 			]
 		},
 		"contracts/interface/IPriceData.sol": {
-			"keccak256": "0x872005100a72efd494cd08af6052e1e9800aec0ba289ebe761dedc1077cfe97c",
+			"keccak256": "0xb9855aecf2b8333c53159ff404e66df0755c88e0cfbb0b82c078ba37dd38cdde",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://e157c452a98cc43989e31a38e2ab991632bc481cc7247bbb2985507877bc39c1",
-				"dweb:/ipfs/QmU8eLkXH1TuL1k5sokfo9iddDL2NLE1HVdYiYXRyVy4Wh"
+				"bzz-raw://072584b51e006f9aab6cc19f44e1982db742e716dfc2cba20dc9a929709e23b2",
+				"dweb:/ipfs/QmQZdNRkbBpB1XncP32c9tgKZyg77GXmufsNn9afn6w4xd"
 			]
 		},
 		"contracts/oracle_utils/LPValue.sol": {

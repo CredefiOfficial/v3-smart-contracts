@@ -8,11 +8,12 @@ import "./interface/ICREDIWhale.sol";
 
 contract CREDIWhale is Ownable, ICREDIWhale  
 {
-    address immutable public CREDI = 0x0A5BCe3bc08608C9B4A4d88bA216fe203DA74861; //0xaE6e307c3Fe9E922E5674DBD7F830Ed49c014c6B;
+    address immutable public CREDI;
     uint private _whaleThreshold = 500000;
 
-    constructor() Ownable(_msgSender())
+    constructor(address _CREDI) Ownable(_msgSender())
     { 
+        CREDI = _CREDI;
         _whaleThreshold = _whaleThreshold*10**IERC20_Decimals(CREDI).decimals();
     }
 

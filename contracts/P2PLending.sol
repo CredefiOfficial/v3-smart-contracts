@@ -11,7 +11,6 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "./interface/IERC20_Decimals.sol";
 import "./interface/IP2PLending.sol";
 
-
 contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
 {
     using SafeERC20 for IERC20;
@@ -19,7 +18,7 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
     uint96 constant public CLAIM_PERIOD = 1 days;
     uint8 constant public RATIOS_DECIMALS = 4;
     uint96 constant public WITHDRAW_COOLDOWN = 60 seconds;
-    uint public LOT_SIZE = 1e9; // 10 USDC
+    uint public LOT_SIZE = 10; // 10 USDC
     uint32 public MIN_LOTS_AMOUNT = 10;
     uint32 public MIN_DURATION = 7; // days
     uint32 public MAX_DURATION = 730; // days
@@ -47,6 +46,7 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
         COLLATERAL = _COLLATERAL;
         COLLATERAL_DECIMALS = IERC20_Decimals(COLLATERAL).decimals();
         USDC = IERC20(_USDC);
+        LOT_SIZE = LOT_SIZE*10**IERC20_Decimals(_USDC).decimals();
         FEES_COLLECTOR = _FEES_COLLECTOR;
     }
 
