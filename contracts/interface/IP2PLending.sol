@@ -59,7 +59,7 @@ interface IP2PLending
 
     function lend(uint loan_id, uint target_lots, uint min_lots) external returns(uint lots);
 
-    function borrow(uint loan_id, uint min_lots, uint max_lots, uint collateral_in, uint collateral_out,  bytes calldata offchain_price_data) external returns(uint lots);
+    function borrow(uint loan_id, uint min_lots, uint max_lots, uint32 target_relative_value, uint min_collateral_in, uint max_collateral_out, bytes calldata offchain_price_data) external returns(uint lots);
     
     function repay(uint loan_id) external;
 

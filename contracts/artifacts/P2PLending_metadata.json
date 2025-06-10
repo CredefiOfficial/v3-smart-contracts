@@ -712,6 +712,12 @@
 			},
 			{
 				"anonymous": false,
+				"inputs": [],
+				"name": "Stopped",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
 				"inputs": [
 					{
 						"indexed": true,
@@ -1152,13 +1158,18 @@
 						"type": "uint256"
 					},
 					{
+						"internalType": "uint32",
+						"name": "target_relative_value",
+						"type": "uint32"
+					},
+					{
 						"internalType": "uint256",
-						"name": "collateral_in",
+						"name": "min_collateral_in",
 						"type": "uint256"
 					},
 					{
 						"internalType": "uint256",
-						"name": "collateral_out",
+						"name": "max_collateral_out",
 						"type": "uint256"
 					},
 					{
@@ -1840,6 +1851,26 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "stop",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "stopped",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "bytes4",
@@ -2314,11 +2345,11 @@
 			]
 		},
 		"contracts/P2PLending.sol": {
-			"keccak256": "0x9e511fcf2ba024b7ce663099bef6f97e46a43d992eca9e59decf7fda922f2778",
+			"keccak256": "0x4414e6e1039ab36a54ed969d6f8c83994dca08a6d13b49d950d41a88fa25d81a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://d1da627b66009585fa94f4f24ae28175cbe5b0af2b81b802460f8284b8916b2c",
-				"dweb:/ipfs/QmcrjmRm5kAys77oC5y6HJdqxh4MEksk8oHKMMq2RkNfTK"
+				"bzz-raw://4604e684dfd847376e2ee89c4ffdbeff7c8f43331a5a94369b0a7570be57d7f2",
+				"dweb:/ipfs/QmTVU8hnUxAgEstxMyese4x1oZHuqgPc5dUcXAmJNE5GVP"
 			]
 		},
 		"contracts/interface/IERC20_Decimals.sol": {
@@ -2330,11 +2361,11 @@
 			]
 		},
 		"contracts/interface/IP2PLending.sol": {
-			"keccak256": "0xd7e15ef04fe0d2fa06597e2321b7a7cb05c0bd599c6ff2cbb94482f22917626a",
+			"keccak256": "0x806420ca0ef4d474a5b6ccb3c2698cba6fbbf31fd94b240e64c1e3e9b3a255cd",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://0addc80429e8cf8623594ee183a40eda391dd3db052c826e51037f459728f511",
-				"dweb:/ipfs/QmRcZauhBZ2AFT9zvhMQ6V1iMfh2oNs4cx7utvNmECE666"
+				"bzz-raw://3ab1632033ec2af0f826a489fc404df00dfec3939e7d5ee07ec5a03d035cf51e",
+				"dweb:/ipfs/QmdDiY9WhJ2frGv4Qi5YeaGbFd39VTni2FBsV1jt1UcRfo"
 			]
 		},
 		"contracts/interface/IPriceData.sol": {

@@ -15,6 +15,7 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
 {
     using SafeERC20 for IERC20;
     
+    bool public stopped = false;
     uint96 constant public CLAIM_PERIOD = 1 days;
     uint8 constant public RATIOS_DECIMALS = 4;
     uint96 constant public WITHDRAW_COOLDOWN = 30 seconds;
@@ -132,6 +133,7 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
 
     function createAsBorrower(uint lots, uint max_collateral_out, uint32 collateral_value, uint32 duration_days, uint32 apy, uint32 fill_duration_days, bytes calldata offchain_price_data) external nonReentrant returns(uint)
     {
+        require(!stopped, "P2PLending:STOPPED!");
         require(lots >= MIN_LOTS_AMOUNT 
             && collateral_value >= TARGET_RELATIVE_VALUE
             && duration_days >= MIN_DURATION && duration_days <= MAX_DURATION
@@ -169,6 +171,7 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
 
     function createAsLender(uint lots, uint32 collateral_value, uint32 duration_days, uint32 apy) external nonReentrant returns(uint)
     {
+        require(!stopped, "P2PLending:STOPPED!");
         require(lots >= MIN_LOTS_AMOUNT 
             && collateral_value >= TARGET_RELATIVE_VALUE
             && duration_days >= MIN_DURATION && duration_days <= MAX_DURATION
@@ -227,9 +230,8 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
         return lots;
     }
 
-    function borrow(uint loan_id, uint min_lots, uint max_lots, uint collateral_in, uint collateral_out,  bytes calldata offchain_price_data) external nonReentrant validate_loan(loan_id) returns(uint)
+    function borrow(uint loan_id, uint min_lots, uint max_lots, uint32 target_relative_value, uint min_collateral_in, uint max_collateral_out,  bytes calldata offchain_price_data) external nonReentrant validate_loan(loan_id) returns(uint)
     {
-        require(collateral_in == 0 || collateral_out == 0, "P2PLending require:collateral_in*collateral_out=0");
         LoanConditions storage conditions = loan_conditions[loan_id];
         LoanState storage state = loan_state[loan_id];
         {
@@ -245,23 +247,31 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
         }
         uint USDC_required = conditions.lots_required*conditions.lot_size;
         uint collateral_amount_100 = usdc_to_collateral(USDC_required, conditions.price_oracle, offchain_price_data);
-
-        if(collateral_out > 0)
+        uint target_collateral_amount = conditions.target_relative_value*collateral_amount_100/10**RATIOS_DECIMALS;
+        if(target_relative_value != 0 || min_collateral_in > 0)
         {
-            IERC20(COLLATERAL).safeTransferFrom(state.borrower, address(this), collateral_out);
-            state.collateral_balance += collateral_out;
+            require(target_relative_value >= conditions.target_relative_value, "P2PLending:Increase target_relative_value!");
+            target_collateral_amount = Math.max(target_collateral_amount, target_relative_value*collateral_amount_100/10**RATIOS_DECIMALS);
+            if(target_collateral_amount > state.collateral_balance)
+            {
+                uint collateral_out = target_collateral_amount - state.collateral_balance;
+                require(max_collateral_out >= collateral_out, "P2PLending:Increase max_collateral_out!");
+                IERC20(COLLATERAL).safeTransferFrom(state.borrower, address(this), collateral_out);
+            }
+            else if(target_collateral_amount < state.collateral_balance)
+            {
+                uint collateral_in = state.collateral_balance - target_collateral_amount;
+                require(collateral_in >= min_collateral_in, "P2PLending:Decrease min_collateral_in!");
+                IERC20(COLLATERAL).safeTransfer(state.borrower, collateral_in);
+            }
+            state.collateral_balance = target_collateral_amount;
         }
-        else if(collateral_in > 0)
+        require(state.collateral_balance >= target_collateral_amount, "P2PLending:Increase collateral!");
         {
-            IERC20(COLLATERAL).safeTransfer(state.borrower, collateral_in);
-            state.collateral_balance -= collateral_in;
-        }
-        require(state.collateral_balance >= conditions.target_relative_value*collateral_amount_100/10**RATIOS_DECIMALS, "P2PLending:Increase collateral!");
-        
         uint fee = PROTOCOL_FEE*USDC_required/(10**RATIOS_DECIMALS);
         USDC.safeTransfer(FEES_COLLECTOR, fee);
         USDC.safeTransfer(state.borrower, USDC_required - fee);
-        
+        }
         emit Borrow(loan_id, conditions.lots_required);
         emit_state_updated(loan_id); 
         return conditions.lots_required;
@@ -406,24 +416,29 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
 
     function setLotSize(uint _LOT_SIZE) external onlyOwner
     {
+        require(_LOT_SIZE > 0);
         LOT_SIZE = _LOT_SIZE;
         emit SetLotSize(LOT_SIZE);
     }
 
     function setMinLotsAmount(uint32 _MIN_LOTS_AMOUNT) external onlyOwner
     {
+        require(_MIN_LOTS_AMOUNT > 0);
         MIN_LOTS_AMOUNT = _MIN_LOTS_AMOUNT;
         emit SetMinLotsAmount(MIN_LOTS_AMOUNT);
     }
 
     function setMinDuration(uint32 _MIN_DURATION) external onlyOwner
     {
+        require(_MIN_DURATION > 0);
+        require(MAX_DURATION >= _MIN_DURATION);
         MIN_DURATION = _MIN_DURATION;
         emit SetMinDuration(MIN_DURATION);
     }
 
     function setMaxDuration(uint32 _MAX_DURATION) external onlyOwner
     {
+        require(_MAX_DURATION >= MIN_DURATION);
         MAX_DURATION = _MAX_DURATION;
         emit SetMaxDuration(MAX_DURATION);
     }
@@ -436,24 +451,29 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
 
     function setMinAPY(uint32 _MIN_APY) external onlyOwner
     {
+        require(MAX_APY >= _MIN_APY);
         MIN_APY = _MIN_APY;
         emit SetMinAPY(MIN_APY);
     }
 
     function setMaxAPY(uint32 _MAX_APY) external onlyOwner
     {
+        require(_MAX_APY >= MIN_APY);
         MAX_APY = _MAX_APY;
         emit SetMaxAPY(MAX_APY);
     }
 
     function setTargetRelativeValue(uint32 _TARGET_RELATIVE_VALUE) external onlyOwner
     {
+        require(_TARGET_RELATIVE_VALUE >= LIQUIDATION_RELATIVE_VALUE);
         TARGET_RELATIVE_VALUE = _TARGET_RELATIVE_VALUE;
         emit SetTargetRelativeValue(TARGET_RELATIVE_VALUE);
     }
 
     function setLiquidationRelativeValue(uint32 _LIQUIDATION_RELATIVE_VALUE) external onlyOwner
     {
+        require(_LIQUIDATION_RELATIVE_VALUE > 10**RATIOS_DECIMALS);
+        require(TARGET_RELATIVE_VALUE >= _LIQUIDATION_RELATIVE_VALUE);
         LIQUIDATION_RELATIVE_VALUE = _LIQUIDATION_RELATIVE_VALUE;
         emit SetLiquidationRelativeValue(LIQUIDATION_RELATIVE_VALUE);
     }
@@ -474,6 +494,14 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
     {
         PRICE_ORACLE = IPriceData(_PRICE_ORACLE);
         emit SetPriceOracle(_PRICE_ORACLE);
+    }
+
+    event Stopped();
+    function stop() external onlyOwner
+    {
+        require(!stopped);
+        stopped = true;
+        emit Stopped();
     }
 
 }

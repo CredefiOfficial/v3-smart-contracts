@@ -7,8 +7,8 @@
 - LPStaking [0x2E7bC1bF4dB9231B99A0ca579696B589fe704f61](https://testnet.bscscan.com/address/0x2E7bC1bF4dB9231B99A0ca579696B589fe704f61)
 - MarketingStaking [0x1d46FE52493C60bF040090c1f34b72e088cEb741](https://testnet.bscscan.com/address/0x1d46FE52493C60bF040090c1f34b72e088cEb741)
 - ProfitShare [0x518b62aFaEa68D62a1a15fdA6c29B36dFabCc1a7](https://testnet.bscscan.com/address/0x518b62aFaEa68D62a1a15fdA6c29B36dFabCc1a7)
-- P2PLending tCREDI [0xEAca5F3AfCF86669381f7e1a9C6Ee08cb9cb62A0](https://testnet.bscscan.com/address/0xEAca5F3AfCF86669381f7e1a9C6Ee08cb9cb62A0)
-- P2PLending txCREDI [0x4B0B2c9e00c4BBC2C3f3150B9044cA1Aee4Dbc32](https://testnet.bscscan.com/address/0x4B0B2c9e00c4BBC2C3f3150B9044cA1Aee4Dbc32)
+- P2PLending tCREDI [0xb32e47bc317846Fbb27fe1c4A3F862D34eb73155](https://testnet.bscscan.com/address/0xb32e47bc317846Fbb27fe1c4A3F862D34eb73155)
+- P2PLending txCREDI [0x1e9356315c9f10135fB9515e846B219248b3E659](https://testnet.bscscan.com/address/0x1e9356315c9f10135fB9515e846B219248b3E659)
 
 ### Test tokens
 - tCREDI [0x0a5bce3bc08608c9b4a4d88ba216fe203da74861](https://testnet.bscscan.com/address/0x0a5bce3bc08608c9b4a4d88ba216fe203da74861)
@@ -26,8 +26,8 @@
 - PriceData [0xA0bb72cb38D7AB55cCd33aDC6D7cb49DB735A8a5](https://testnet.xdcscan.com/address/0xA0bb72cb38D7AB55cCd33aDC6D7cb49DB735A8a5)
 - MarketingStaking [0xfC490a7cdFCaCf432d9F3fC21c9Dc60DfF06d4a2](https://testnet.xdcscan.com/address/0xfC490a7cdFCaCf432d9F3fC21c9Dc60DfF06d4a2)
 - ProfitShare [0xa587ec58f78F742e65aC5d230b1F3DDC11887236](https://testnet.xdcscan.com/address/0xa587ec58f78F742e65aC5d230b1F3DDC11887236)
-- P2PLending tCREDI [0x23AcA62C23Fe1417A7E25222dD0e1FBc4F2f66f9](https://testnet.xdcscan.com/address/0x23AcA62C23Fe1417A7E25222dD0e1FBc4F2f66f9)
-- P2PLending txCREDI [0x40dfEC31bb4E860745eBdAd767Fc4119f1ceE43E](https://testnet.xdcscan.com/address/0x40dfEC31bb4E860745eBdAd767Fc4119f1ceE43E)
+- P2PLending tCREDI [0x3C7f24eE2F238427881A4845ba4cC7aFb08d3Fb9](https://testnet.xdcscan.com/address/0x3C7f24eE2F238427881A4845ba4cC7aFb08d3Fb9)
+- P2PLending txCREDI [0x369F6F2b8De901C383a54e2C51fA4b616Da0FddF](https://testnet.xdcscan.com/address/0x369F6F2b8De901C383a54e2C51fA4b616Da0FddF)
 
 ### Test tokens
 - tCREDI (18 decimals) [0x9E0F2263c0Cb67Ee08B8c8A42be8770870b05215](https://testnet.xdcscan.com/address/0x9E0F2263c0Cb67Ee08B8c8A42be8770870b05215)
