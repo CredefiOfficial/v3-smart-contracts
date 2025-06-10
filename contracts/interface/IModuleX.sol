@@ -9,6 +9,8 @@ interface IModuleX
 
     function getStakesCount() external view returns(uint);
     
+    function getDifficulty() external view returns(uint);
+    
     function calculateReward(uint stake_amount) external returns(uint);
 
     function stake(uint96 lock_period, uint amount) external returns(uint stake_id, uint xCREDI_reward);

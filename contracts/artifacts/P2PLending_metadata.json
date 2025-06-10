@@ -1152,13 +1152,13 @@
 						"type": "uint256"
 					},
 					{
-						"internalType": "bool",
-						"name": "transfer_collateral",
-						"type": "bool"
+						"internalType": "uint256",
+						"name": "collateral_in",
+						"type": "uint256"
 					},
 					{
 						"internalType": "uint256",
-						"name": "max_collateral_out",
+						"name": "collateral_out",
 						"type": "uint256"
 					},
 					{
@@ -2116,7 +2116,7 @@
 		},
 		"optimizer": {
 			"enabled": true,
-			"runs": 200
+			"runs": 500
 		},
 		"remappings": []
 	},
@@ -2314,11 +2314,11 @@
 			]
 		},
 		"contracts/P2PLending.sol": {
-			"keccak256": "0x90fa2ccdafa8b18784242ae28a5cc6dc304fbf840dd3619c2df16689f7a5c64b",
+			"keccak256": "0x9e511fcf2ba024b7ce663099bef6f97e46a43d992eca9e59decf7fda922f2778",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ae7482281ccfdf9b09de55304e3420fa4d4b59b52307e08e102120878cdbd82e",
-				"dweb:/ipfs/Qmca2iuhysCDnQXzdkKUbeHYTSoZRGfXvW8jZBT7twb3pU"
+				"bzz-raw://d1da627b66009585fa94f4f24ae28175cbe5b0af2b81b802460f8284b8916b2c",
+				"dweb:/ipfs/QmcrjmRm5kAys77oC5y6HJdqxh4MEksk8oHKMMq2RkNfTK"
 			]
 		},
 		"contracts/interface/IERC20_Decimals.sol": {
@@ -2330,11 +2330,11 @@
 			]
 		},
 		"contracts/interface/IP2PLending.sol": {
-			"keccak256": "0xd0ce70d859d41bacbad5f3a903c0361aafc86c6d92ed63b687022b6c158f4cac",
+			"keccak256": "0xd7e15ef04fe0d2fa06597e2321b7a7cb05c0bd599c6ff2cbb94482f22917626a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b726b111340b838a84f7eddc8f23ffc2eeadf2346477350cfd27d9e46684cd57",
-				"dweb:/ipfs/QmPVzQxiVP6fT8vyr6o76hRroy4dkR867jP5qXnH2cw3Ut"
+				"bzz-raw://0addc80429e8cf8623594ee183a40eda391dd3db052c826e51037f459728f511",
+				"dweb:/ipfs/QmRcZauhBZ2AFT9zvhMQ6V1iMfh2oNs4cx7utvNmECE666"
 			]
 		},
 		"contracts/interface/IPriceData.sol": {

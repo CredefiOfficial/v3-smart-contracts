@@ -41,7 +41,7 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
     mapping (address => mapping(uint => uint96)) private _withdraw_cooldown;
 
     constructor(address _price_oracle_address, address _COLLATERAL, address _USDC, address _FEES_COLLECTOR, string memory _erc1155_uri) Ownable(_msgSender()) ERC1155(_erc1155_uri)
-    { 
+    {
         PRICE_ORACLE = IPriceData(_price_oracle_address);
         COLLATERAL = _COLLATERAL;
         COLLATERAL_DECIMALS = IERC20_Decimals(COLLATERAL).decimals();
@@ -227,8 +227,9 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
         return lots;
     }
 
-    function borrow(uint loan_id, uint min_lots, uint max_lots, bool transfer_collateral, uint max_collateral_out,  bytes calldata offchain_price_data) external nonReentrant validate_loan(loan_id) returns(uint)
+    function borrow(uint loan_id, uint min_lots, uint max_lots, uint collateral_in, uint collateral_out,  bytes calldata offchain_price_data) external nonReentrant validate_loan(loan_id) returns(uint)
     {
+        require(collateral_in == 0 || collateral_out == 0, "P2PLending require:collateral_in*collateral_out=0");
         LoanConditions storage conditions = loan_conditions[loan_id];
         LoanState storage state = loan_state[loan_id];
         {
@@ -245,28 +246,22 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
         uint USDC_required = conditions.lots_required*conditions.lot_size;
         uint collateral_amount_100 = usdc_to_collateral(USDC_required, conditions.price_oracle, offchain_price_data);
 
-        if(transfer_collateral)
+        if(collateral_out > 0)
         {
-            uint target_collateral_amount = conditions.target_relative_value*collateral_amount_100/10**RATIOS_DECIMALS;
-            if(target_collateral_amount > state.collateral_balance)
-            {
-                uint collateral_out = target_collateral_amount - state.collateral_balance;
-                require(max_collateral_out >= collateral_out,"P2PLending:Increase max_collateral_out!");
-                IERC20(COLLATERAL).safeTransferFrom(state.borrower, address(this), collateral_out);
-            }
-            else if(target_collateral_amount < state.collateral_balance)
-            {
-                IERC20(COLLATERAL).safeTransfer(state.borrower, state.collateral_balance - target_collateral_amount);
-            }
-            state.collateral_balance = target_collateral_amount;
+            IERC20(COLLATERAL).safeTransferFrom(state.borrower, address(this), collateral_out);
+            state.collateral_balance += collateral_out;
         }
-        require(state.collateral_balance >= TARGET_RELATIVE_VALUE*collateral_amount_100/10**RATIOS_DECIMALS, "P2PLending:Increase collateral!");
+        else if(collateral_in > 0)
         {
-            uint fee = PROTOCOL_FEE*USDC_required/(10**RATIOS_DECIMALS);
-            USDC.safeTransfer(FEES_COLLECTOR, fee);
-            USDC.safeTransfer(state.borrower, USDC_required - fee);
+            IERC20(COLLATERAL).safeTransfer(state.borrower, collateral_in);
+            state.collateral_balance -= collateral_in;
         }
-
+        require(state.collateral_balance >= conditions.target_relative_value*collateral_amount_100/10**RATIOS_DECIMALS, "P2PLending:Increase collateral!");
+        
+        uint fee = PROTOCOL_FEE*USDC_required/(10**RATIOS_DECIMALS);
+        USDC.safeTransfer(FEES_COLLECTOR, fee);
+        USDC.safeTransfer(state.borrower, USDC_required - fee);
+        
         emit Borrow(loan_id, conditions.lots_required);
         emit_state_updated(loan_id); 
         return conditions.lots_required;

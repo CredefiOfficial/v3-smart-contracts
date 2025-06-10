@@ -550,7 +550,7 @@
 		},
 		"optimizer": {
 			"enabled": true,
-			"runs": 200
+			"runs": 500
 		},
 		"remappings": []
 	},
@@ -628,11 +628,11 @@
 			]
 		},
 		"contracts/interface/IModuleX.sol": {
-			"keccak256": "0xd1ab1c30595560209e53a1a63ceae830dfbc87c37156c2d55dfb9d7d8029a771",
+			"keccak256": "0xe488182db68cc6c3f36721122793f9ae18c0121b496f81fcf04db3a920cdd305",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://8a529f385909f4285cd720ca7934600b38243b1c497e8641372ee9ce15d7e302",
-				"dweb:/ipfs/QmQz8Nui3oG9HVFqyWyJdpkCMyHqrLK5QTquREqqycm9pK"
+				"bzz-raw://73a131102987d248464278c0095139c9fa869966455db5d1002311216f61cd1e",
+				"dweb:/ipfs/Qmf4Em7XiH35WNu8oyemuhzegDEPvJ7827zo9U4cM7zbNU"
 			]
 		}
 	},
