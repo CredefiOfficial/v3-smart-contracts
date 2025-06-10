@@ -17,8 +17,8 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
     
     uint96 constant public CLAIM_PERIOD = 1 days;
     uint8 constant public RATIOS_DECIMALS = 4;
-    uint96 constant public WITHDRAW_COOLDOWN = 60 seconds;
-    uint public LOT_SIZE = 10; // 10 USDC
+    uint96 constant public WITHDRAW_COOLDOWN = 30 seconds;
+    uint public LOT_SIZE = 10; // 10 USDC in wei after constructor
     uint32 public MIN_LOTS_AMOUNT = 10;
     uint32 public MIN_DURATION = 7; // days
     uint32 public MAX_DURATION = 730; // days
@@ -204,7 +204,7 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
     {
         require(target_lots > 0 && target_lots >= min_lots, "P2PLending require:target_lots>0 && lots>=min_lots");
         require(getLoanStatus(loan_id) == LoanStatus.FINANCING, "P2PLending:LoanStatus not equals FINANCING!");
-
+        
         LoanConditions storage conditions = loan_conditions[loan_id];
         uint available_lots = conditions.lots_required - totalSupply(loan_id);
         require(available_lots >= min_lots, "P2PLending:Not enough available lots!");

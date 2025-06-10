@@ -5,10 +5,11 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/math/Math.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import {Arrays} from "@openzeppelin/contracts/utils/Arrays.sol";
 import "./interface/IModuleX.sol";
 
-contract ProfitShare is Ownable
+contract ProfitShare is Ownable, ReentrancyGuard
 {
     using SafeERC20 for IERC20;
     struct PoolInfo
@@ -73,7 +74,6 @@ contract ProfitShare is Ownable
     {
         MODULEX = _modulex_addr;
         CREDI = IERC20(IModuleX(MODULEX).getCREDIAddress());
-        CREDI.approve(MODULEX, type(uint256).max);
         duration_multiplier[0] = multiplier_BASE; // perpetual
         require(time_now() < end_epoch, "ProfitShare:End time must be greater than time_now!");
         start_epoch = uint96(Math.max(start_epoch, time_now()));
@@ -173,16 +173,24 @@ contract ProfitShare is Ownable
         }
     }
 
-    function stake(uint96 lock_period, uint amount) external
+    function _addRewards(uint amount) internal
+    {
+        require (amount > 0, "ProfitShare:amount must be greater than zero!");
+        pool.rewards_token.safeTransferFrom(_msgSender(), address(this), amount);
+        emit RewardAdded(amount);
+    }
+
+    function stake(uint96 lock_period, uint amount) external nonReentrant
     {
         pool.staking_token.safeTransferFrom(_msgSender(), address(this), amount); 
         uint stake_id = lock_period == 0 ? 0 : ++users[_msgSender()].stakes_count;
         _stake(_msgSender(), lock_period, amount, stake_id);  
     }
 
-    function stakeCREDI(uint96 lock_period, uint CREDI_amount) external
+    function stakeCREDI(uint96 lock_period, uint CREDI_amount) external nonReentrant
     {
         CREDI.safeTransferFrom(_msgSender(), address(this), CREDI_amount);
+        CREDI.approve(MODULEX, CREDI_amount);
         (uint modulex_stake_id, uint amount) = IModuleX(MODULEX).stake(lock_period, CREDI_amount);
         uint stake_id = lock_period == 0 ? 0 : ++users[_msgSender()].stakes_count;
         require(stake_id > 0, "ProfitShare:stake_id must be greater than zero!");
@@ -190,7 +198,7 @@ contract ProfitShare is Ownable
         _stake(_msgSender(), lock_period, amount, stake_id);  
     }
 
-    function restake(uint stake_id, uint96 lock_period, uint amount) external validate_stake(_msgSender(), stake_id)
+    function restake(uint stake_id, uint96 lock_period, uint amount) external nonReentrant validate_stake(_msgSender(), stake_id)
     {
         if(amount > 0)
         {
@@ -207,7 +215,7 @@ contract ProfitShare is Ownable
         _stake(_msgSender(), lock_period, new_stake_amount, stake_id);  
     }
 
-    function unstake(uint stake_id, bool claim_rewards) validate_stake(_msgSender(), stake_id) external
+    function unstake(uint stake_id, bool claim_rewards) external nonReentrant validate_stake(_msgSender(), stake_id)
     {
         StakeDetails storage user_stake = stakes[_msgSender()][stake_id];
         require(time_now() >= user_stake.maturity, "ProfitShare:Early Withdrawal is not permitted!");
@@ -224,7 +232,7 @@ contract ProfitShare is Ownable
         }
     }
 
-    function unstakePerpetual(uint amount, bool claim_rewards) external
+    function unstakePerpetual(uint amount, bool claim_rewards) external nonReentrant
     {
         require(amount > 0, "Cannot unstake 0!");
         pool.staking_token.safeTransfer(_msgSender(), amount);
@@ -235,7 +243,7 @@ contract ProfitShare is Ownable
         }
     }
 
-    function claimRewards() external 
+    function claimRewards() external nonReentrant 
     {
         update_pool_and_user(_msgSender(), 0, 0);
         _claim(_msgSender());
@@ -257,16 +265,14 @@ contract ProfitShare is Ownable
         pool.end_epoch = now_epoch + duration;
         if(transfer_reward_amount > 0)
         {
-            addRewards(transfer_reward_amount);
+            _addRewards(transfer_reward_amount);
         }
         emit PoolUpdated(pool.effective_xpoints, pool.reward_rate, pool.reward_rate_cumsum, pool.last_update_epoch, pool.end_epoch);
     }
 
-    function addRewards(uint amount) public
+    function addRewards(uint amount) external
     {
-        require (amount > 0, "ProfitShare:amount must be greater than zero!");
-        pool.rewards_token.safeTransferFrom(_msgSender(), address(this), amount);
-        emit RewardAdded(amount);
+        _addRewards(amount);
     }
 
     function withdrawRewards(address to, uint amount) external onlyOwner

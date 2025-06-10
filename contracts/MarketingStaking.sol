@@ -5,8 +5,9 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/math/Math.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
-contract MarketingStaking is Ownable
+contract MarketingStaking is Ownable, ReentrancyGuard
 {
     using SafeERC20 for IERC20;
     struct PoolInfo
@@ -144,7 +145,7 @@ contract MarketingStaking is Ownable
         }
     }
 
-    function stake(uint pool_id, uint stake_amount) external validate_pool(pool_id)
+    function stake(uint pool_id, uint stake_amount) external nonReentrant validate_pool(pool_id)
     {
         PoolInfo storage pool = pools[pool_id];
         require(time_now() >= pool.start_epoch && time_now() < pool.end_epoch, "MarketingStaking:Pool is not active!");
@@ -172,7 +173,7 @@ contract MarketingStaking is Ownable
         return user_stake.reward_amount + user_stake.stake_amount*(reward_rate_cumsum - user_stake.reward_rate_cumsum)/SCALE_FACTOR;
     }
 
-    function claim(uint pool_id) external validate_pool(pool_id)
+    function claim(uint pool_id) external nonReentrant validate_pool(pool_id)
     {
         updatePool(pool_id, _msgSender());
         StakeDetails storage details = stakes[_msgSender()][pool_id];
@@ -197,7 +198,7 @@ contract MarketingStaking is Ownable
         emit PoolUpdated(pool_id, pool.stake_amount, pool.reward_rate, pool.reward_rate_cumsum, pool.last_update_epoch);
     }
 
-    function withdrawStake(uint pool_id) external validate_pool(pool_id)
+    function withdrawStake(uint pool_id) external nonReentrant validate_pool(pool_id)
     {
         updatePool(pool_id, _msgSender());
         StakeDetails storage details = stakes[_msgSender()][pool_id];
@@ -215,7 +216,7 @@ contract MarketingStaking is Ownable
         }  
     }
 
-    function addRewards(uint pool_id, uint amount) external validate_pool(pool_id) 
+    function addRewards(uint pool_id, uint amount) external nonReentrant validate_pool(pool_id) 
     {
         require (amount > 0, "MarketingStaking:amount must be greater than zero!");
         PoolInfo storage pool = pools[pool_id];

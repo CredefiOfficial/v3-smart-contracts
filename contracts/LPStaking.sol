@@ -4,11 +4,12 @@ pragma solidity ^0.8.20;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "./oracle_utils/LPValue.sol";
 import "./interface/ICREDIWhale.sol";
 import "./interface/IPriceData.sol";
 
-contract LPStaking is Ownable, LPValue
+contract LPStaking is Ownable, LPValue, ReentrancyGuard
 {
     using SafeERC20 for IERC20;
     struct PoolInfo
@@ -32,7 +33,7 @@ contract LPStaking is Ownable, LPValue
     }
 
     uint96 constant public CLAIM_PERIOD = 40 days;
-    ICREDIWhale immutable public CREDI_WHALE_ORACLE = ICREDIWhale(0x7b5b18B1928172e250Bb73c0543266aB182aB1Bb);
+    ICREDIWhale immutable public CREDI_WHALE_ORACLE;
 
     PoolInfo[] private pools;
     mapping (uint => StakeDetails) private stakes;
@@ -135,7 +136,7 @@ contract LPStaking is Ownable, LPValue
         return pool_id;
     }
 
-    function stake(uint pool_id, uint stake_amount, bytes calldata token0_price_data, bytes calldata token1_price_data) external validate_pool(pool_id)
+    function stake(uint pool_id, uint stake_amount, bytes calldata token0_price_data, bytes calldata token1_price_data) external nonReentrant validate_pool(pool_id)
     {
         PoolInfo storage pool = pools[pool_id];
         require(pool.apy > 0, "LPStaking:Pool is paused!");
@@ -163,7 +164,7 @@ contract LPStaking is Ownable, LPValue
         stakes_count++; 
     }
 
-    function claim(uint stake_id) external validate_stake(stake_id)
+    function claim(uint stake_id) external nonReentrant validate_stake(stake_id)
     {      
         StakeDetails storage details = stakes[stake_id];
         require(details.owner == _msgSender(), "LPStaking:Caller is not the owner");
@@ -193,7 +194,7 @@ contract LPStaking is Ownable, LPValue
         emit RewardVoided(details.pool_id, stake_id);
     }
 
-    function withdrawStake(uint stake_id) external validate_stake(stake_id)
+    function withdrawStake(uint stake_id) external nonReentrant validate_stake(stake_id)
     {
         StakeDetails storage details = stakes[stake_id];
         require(details.owner == _msgSender(), "LPStaking:Caller is not the owner");

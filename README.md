@@ -7,7 +7,8 @@
 - LPStaking [0x2E7bC1bF4dB9231B99A0ca579696B589fe704f61](https://testnet.bscscan.com/address/0x2E7bC1bF4dB9231B99A0ca579696B589fe704f61)
 - MarketingStaking [0x1d46FE52493C60bF040090c1f34b72e088cEb741](https://testnet.bscscan.com/address/0x1d46FE52493C60bF040090c1f34b72e088cEb741)
 - ProfitShare [0x8Fe88F1283b2468c5389dc381Ef5848366CBE52A](https://testnet.bscscan.com/address/0x8Fe88F1283b2468c5389dc381Ef5848366CBE52A)
-- P2PLending [0xEED02Cf972a6b26851f3D0ea8Db191A9431F268a](https://testnet.bscscan.com/address/0xEED02Cf972a6b26851f3D0ea8Db191A9431F268a)
+- P2PLending tCREDI [0xEED02Cf972a6b26851f3D0ea8Db191A9431F268a](https://testnet.bscscan.com/address/0xEED02Cf972a6b26851f3D0ea8Db191A9431F268a)
+- P2PLending txCREDI [0x0bA12f7508262B3565868ce0918f6AFf47cC00c5](https://testnet.bscscan.com/address/0x0bA12f7508262B3565868ce0918f6AFf47cC00c5)
 
 ### Test tokens
 - tCREDI [0x0a5bce3bc08608c9b4a4d88ba216fe203da74861](https://testnet.bscscan.com/address/0x0a5bce3bc08608c9b4a4d88ba216fe203da74861)

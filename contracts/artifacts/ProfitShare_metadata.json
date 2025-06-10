@@ -59,6 +59,11 @@
 				"type": "error"
 			},
 			{
+				"inputs": [],
+				"name": "ReentrancyGuardReentrantCall",
+				"type": "error"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -811,6 +816,11 @@
 						"details": "The caller account is not authorized to perform an operation."
 					}
 				],
+				"ReentrancyGuardReentrantCall()": [
+					{
+						"details": "Unauthorized reentrant call."
+					}
+				],
 				"SafeERC20FailedOperation(address)": [
 					{
 						"details": "An operation with an ERC-20 token failed."
@@ -847,7 +857,7 @@
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": false,
+			"enabled": true,
 			"runs": 200
 		},
 		"remappings": []
@@ -933,6 +943,14 @@
 				"dweb:/ipfs/QmVSaVJf9FXFhdYEYeCEfjMVHrxDh5qL4CGkxdMWpQCrqG"
 			]
 		},
+		"@openzeppelin/contracts/utils/ReentrancyGuard.sol": {
+			"keccak256": "0x11a5a79827df29e915a12740caf62fe21ebe27c08c9ae3e09abe9ee3ba3866d3",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://3cf0c69ab827e3251db9ee6a50647d62c90ba580a4d7bbff21f2bea39e7b2f4a",
+				"dweb:/ipfs/QmZiKwtKU1SBX4RGfQtY7PZfiapbbu6SZ9vizGQD9UHjRA"
+			]
+		},
 		"@openzeppelin/contracts/utils/SlotDerivation.sol": {
 			"keccak256": "0x67672e4ca1dafdcc661d4eba8475cfac631fa0933309258e3af7644b92e1fb26",
 			"license": "MIT",
@@ -974,11 +992,11 @@
 			]
 		},
 		"contracts/ProfitShare.sol": {
-			"keccak256": "0x9bfc574e6d9e09e49a9c04484e24056bbf8738ec8eb1bb6a1965bfe9919fa836",
+			"keccak256": "0x845440bdd133f436be273045ffc4bfdd86218d953b224ceb6341047178c041ad",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://71f17c963ebb3cb9231af6e7d5e07ab64b8f726dc6fedeb008e3e58249fd7fdb",
-				"dweb:/ipfs/QmdxA2LKd9qAqwbq42Yh5V7oCYxvtjP1xQ31mP5dxXTX31"
+				"bzz-raw://0811f1329d94af58d7b19abb9aa471315adb29d11814f5f7ac7e08ea0f8ede1e",
+				"dweb:/ipfs/QmSmX9VYPYfip5o5Q8fv6icKReGja9ja1k3hVKhw4muhS9"
 			]
 		},
 		"contracts/interface/IModuleX.sol": {
