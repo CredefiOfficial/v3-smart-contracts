@@ -18,11 +18,12 @@ contract ModuleX is IModuleX, Ownable
         uint reward_amount;
     }
 
+    bool public stopped = false; 
     uint96 constant public MATURITY = 180 minutes; // 180 days;
-    uint constant private DIFFICULTY = 11; // Initial DIFFICULTY
-    uint constant public DIFFICULTY_INTERVAL = 500000 * 10**18; // CREDI decimals = 18
-    IERC20 immutable public CREDI;// = IERC20(0x0A5BCe3bc08608C9B4A4d88bA216fe203DA74861);
-    IERC20 immutable public xCREDI;// = IERC20(0x582d54dB27e6a0D6759F3203677575D8E91d01cf);
+    uint immutable private DIFFICULTY = 11; // Initial DIFFICULTY
+    uint immutable public DIFFICULTY_INTERVAL;
+    IERC20 immutable public CREDI;
+    IERC20 immutable public xCREDI;
     
     mapping (uint => StakeDetails) private stakes;
     uint private stakes_count = 1;
@@ -41,10 +42,12 @@ contract ModuleX is IModuleX, Ownable
         _;
     }
 
-    constructor(address _credi_addr, address _xcredi_addr) Ownable(_msgSender())
+    constructor(address _credi_addr, address _xcredi_addr, uint _DIFFICULTY, uint _DIFFICULTY_INTERVAL) Ownable(_msgSender())
     { 
         CREDI = IERC20(_credi_addr);
         xCREDI = IERC20(_xcredi_addr);
+        DIFFICULTY_INTERVAL = _DIFFICULTY_INTERVAL;
+        DIFFICULTY = _DIFFICULTY;
     }
     
     function getCREDIAddress() external view returns(address)
@@ -111,6 +114,7 @@ contract ModuleX is IModuleX, Ownable
 
     function stake(uint96 lock_period, uint stake_amount) external returns(uint, uint)
     {
+        require(!stopped, "ModuleX:STOPPED!");
         require(stake_amount > 0, "ModuleX:Stake amount must be greater than 0!");
         require(lock_period >= MATURITY, "ModuleX:Use longer lock_period!");
         CREDI.safeTransferFrom(_msgSender(), address(this), stake_amount); 
@@ -184,6 +188,11 @@ contract ModuleX is IModuleX, Ownable
         require(xCREDI.balanceOf(address(this)) >= amount + pending_payments, "ModuleX:Insufficient balance!");
         xCREDI.safeTransfer(to, amount);
         emit RewardWithdrawn(to, amount);
+    }
+
+    function stop() external onlyOwner
+    {
+        stopped = true;
     }
 
 }

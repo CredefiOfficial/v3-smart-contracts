@@ -16,6 +16,16 @@
 						"internalType": "address",
 						"name": "_xcredi_addr",
 						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_DIFFICULTY",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_DIFFICULTY_INTERVAL",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -427,6 +437,26 @@
 			},
 			{
 				"inputs": [],
+				"name": "stop",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "stopped",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "total_staked",
 				"outputs": [
 					{
@@ -620,11 +650,11 @@
 			]
 		},
 		"contracts/ModuleX.sol": {
-			"keccak256": "0xbcb5b37a6009605f21518e82f89786320ad0390a9c3dc16a12cdc979a93c9d5e",
+			"keccak256": "0x11e84be27cfb1efbdbc3949dc4e9474112418aafdc3b4e3ad1d7a8c897a5415a",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5e9b3ce2fec6d0e91b992daaff44266ae5064d2eff8761bdab0670ac35418088",
-				"dweb:/ipfs/QmbByoH1Sxno89wwvkKRRCRPUtLKGQJsCkzxtQnbVxQtQo"
+				"bzz-raw://71bac5a9904bce80d03ef2250e35bb64368b53116713e8165c41b729523cebe0",
+				"dweb:/ipfs/QmbZqimmjz4tYBabLTbBoAAedSHW5WxqBvBKWefJC2yHyV"
 			]
 		},
 		"contracts/interface/IModuleX.sol": {
