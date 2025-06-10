@@ -20,7 +20,7 @@ contract ModuleX is IModuleX, Ownable
 
     bool public stopped = false; 
     uint96 constant public MATURITY = 180 minutes; // 180 days;
-    uint immutable private DIFFICULTY = 11; // Initial DIFFICULTY
+    uint immutable private DIFFICULTY; // Initial DIFFICULTY
     uint immutable public DIFFICULTY_INTERVAL;
     IERC20 immutable public CREDI;
     IERC20 immutable public xCREDI;
@@ -35,6 +35,7 @@ contract ModuleX is IModuleX, Ownable
     event Staked(address indexed user, uint stake_id, uint96 maturity, uint stake_amount, uint rewards_amount);
     event CREDIWithdrawn(uint stake_id, uint amount);
     event RewardPaid(uint stake_id);
+    event Stopped();
 
     modifier validate_stake(uint stake_id) 
     {
@@ -193,6 +194,7 @@ contract ModuleX is IModuleX, Ownable
     function stop() external onlyOwner
     {
         stopped = true;
+        emit Stopped();
     }
 
 }

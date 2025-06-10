@@ -185,6 +185,12 @@
 				"type": "event"
 			},
 			{
+				"anonymous": false,
+				"inputs": [],
+				"name": "Stopped",
+				"type": "event"
+			},
+			{
 				"inputs": [],
 				"name": "CREDI",
 				"outputs": [
@@ -650,11 +656,11 @@
 			]
 		},
 		"contracts/ModuleX.sol": {
-			"keccak256": "0x11e84be27cfb1efbdbc3949dc4e9474112418aafdc3b4e3ad1d7a8c897a5415a",
+			"keccak256": "0x868b1bbae8e53bc4f62ee66ff1aecf4f0b66659fb963f22a20798b23adbd3929",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://71bac5a9904bce80d03ef2250e35bb64368b53116713e8165c41b729523cebe0",
-				"dweb:/ipfs/QmbZqimmjz4tYBabLTbBoAAedSHW5WxqBvBKWefJC2yHyV"
+				"bzz-raw://3c3ac5c72006c0a80229df553f1f89566a6be1a0837004813a390a6d403aba09",
+				"dweb:/ipfs/QmNVfFacmGH2rXDUSerdpbbNd6ZwL2gmYGCpawBaL3HkB2"
 			]
 		},
 		"contracts/interface/IModuleX.sol": {
