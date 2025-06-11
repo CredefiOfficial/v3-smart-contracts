@@ -737,7 +737,7 @@
 		},
 		"optimizer": {
 			"enabled": true,
-			"runs": 200
+			"runs": 500
 		},
 		"remappings": []
 	},
@@ -822,11 +822,11 @@
 			]
 		},
 		"contracts/LPStaking.sol": {
-			"keccak256": "0x25999bba56da5d3c2838a6b037c94c315ec1921cd9208698e1fb05a45565070a",
+			"keccak256": "0xaa59af5a7467d2c0cba7be361f49262cd182ef6ecb663719d5de53726d485e56",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://526ff064dd4fc8c7d124f4e3c8c1c86bd45397d792433cdf280e603cd530831e",
-				"dweb:/ipfs/QmbUPU8wuU7DfgjAjhoC54ZXkdYugrvAaCsch74ygzTx4s"
+				"bzz-raw://0acdcc470dcd4dfd76ece19802db2223f2252e64cc406cab4f74d1aed43863c9",
+				"dweb:/ipfs/QmThYED6oxyqkC1V8XE5M4ZZTJEJzLKGwYrk3eMsTVgcRC"
 			]
 		},
 		"contracts/interface/ICREDIWhale.sol": {

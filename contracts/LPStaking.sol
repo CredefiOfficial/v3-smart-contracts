@@ -138,6 +138,7 @@ contract LPStaking is Ownable, LPValue, ReentrancyGuard
 
     function stake(uint pool_id, uint stake_amount, bytes calldata token0_price_data, bytes calldata token1_price_data) external nonReentrant validate_pool(pool_id)
     {
+        require(stake_amount > 0,"LPStaking:stake_amount must be greater than zero!");
         PoolInfo storage pool = pools[pool_id];
         require(pool.apy > 0, "LPStaking:Pool is paused!");
         IERC20(pool.staking_token).safeTransferFrom(_msgSender(), address(this), stake_amount); 
