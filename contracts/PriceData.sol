@@ -13,7 +13,7 @@ contract PriceData is IPriceData, Ownable, OffChainPriceOracle
     mapping (address => address[]) public path_div;
     mapping (address => bool) public isOnchainOracle;
 
-    uint8 constant public PRECISION = 20;
+    uint8 constant public PRECISION = 21;
     address immutable public QUOTE_ADDRESS;
     uint8 immutable public QUOTE_DECIMALS;
     

@@ -804,8 +804,8 @@
 			"bytecodeHash": "ipfs"
 		},
 		"optimizer": {
-			"enabled": false,
-			"runs": 200
+			"enabled": true,
+			"runs": 999
 		},
 		"remappings": []
 	},
@@ -891,11 +891,11 @@
 			]
 		},
 		"contracts/PriceData.sol": {
-			"keccak256": "0xdf4e429502284c9a78fddf60765dd82e65085a9d7cdaa91f9ee69326e96786ed",
+			"keccak256": "0xb70da3e5f17e2168ee0f4fd4c5eadaf97b27fc14705329dcc6551a38ad4b55e0",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://c9bc0d50a81677b75f5a53934e8b893da2169123f981e4f6caad7139d028c068",
-				"dweb:/ipfs/QmNvw3P1vrwninBbuDxHFSH3Akjhf6v7GGNNZDPMpJFPjy"
+				"bzz-raw://d7ab766e847c8a5c8a230e459567331c6b2b33ba3d2adbff88616bffc240308e",
+				"dweb:/ipfs/QmT5EkqSnYp8mFqoQnWVyidJN4Gv4SgQXGBhNxXpvwnmP8"
 			]
 		},
 		"contracts/interface/IERC20_Decimals.sol": {

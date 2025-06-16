@@ -46,7 +46,7 @@ contract ProfitShare is Ownable, ReentrancyGuard
 
     IERC20 immutable public CREDI;
     address immutable public MODULEX;
-    uint[] private xCREDI_tiers_threshold = [0, 10000*10**18, 20000*10**18, 50000*10**18];
+    uint[] private xCREDI_tiers_threshold = [0, 10000*10**18, 25000*10**18, 50000*10**18];
     uint[] private xCREDI_tiers_multiplier = [1000, 1500, 2000, 3000];
     mapping (uint96 => uint32) public duration_multiplier;
     mapping (address => UserInfo) private users;
@@ -92,10 +92,10 @@ contract ProfitShare is Ownable, ReentrancyGuard
         emit PoolCreated(address(pool.staking_token), address(pool.rewards_token), pool.start_epoch, SCALE_FACTOR);
         emit PoolUpdated(pool.effective_xpoints, pool.reward_rate, pool.reward_rate_cumsum, pool.last_update_epoch, pool.end_epoch);
         emit SetDurationMultiplier(0, multiplier_BASE);
-        setDurationMultiplier(30 minutes, 1500);
-        setDurationMultiplier(90 minutes, 2000);
-        setDurationMultiplier(180 minutes, 3000);
-        setDurationMultiplier(360 minutes, 5000);
+        setDurationMultiplier(30 days, 2000);
+        setDurationMultiplier(90 days, 3000);
+        setDurationMultiplier(180 days, 4000);
+        setDurationMultiplier(360 days, 6000);
     }
 
     function update_pool_and_user(address owner, uint xpoints_staked, uint xpoints_unstaked) private
@@ -222,8 +222,8 @@ contract ProfitShare is Ownable, ReentrancyGuard
         require(user_stake.stake_amount > 0, "ProfitShare:Nothing to claim");
         if(user_stake.modulex_stake_id > 0)
         {
-            require(IModuleX(MODULEX).claim(user_stake.modulex_stake_id) == user_stake.stake_amount, "ProfitShare:Cannot claim xCREDI from ModuleX!");
-        }    
+            require(IModuleX(MODULEX).claim(user_stake.modulex_stake_id) > 0, "ProfitShare:Cannot claim xCREDI from ModuleX!");
+        }
         pool.staking_token.safeTransfer(_msgSender(), user_stake.stake_amount);
         _unstake(_msgSender(), user_stake.stake_amount, stake_id);
         if(claim_rewards)

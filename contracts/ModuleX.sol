@@ -19,15 +19,15 @@ contract ModuleX is IModuleX, Ownable
     }
 
     bool public stopped = false; 
-    uint96 constant public MATURITY = 180 minutes; // 180 days;
-    uint immutable private DIFFICULTY; // Initial DIFFICULTY
-    uint immutable public DIFFICULTY_INTERVAL;
+    uint96 constant public MATURITY = 180 days;
+    uint public total_staked = 0;
+    uint private DIFFICULTY; // Initial DIFFICULTY
+    uint public DIFFICULTY_INTERVAL;
     IERC20 immutable public CREDI;
     IERC20 immutable public xCREDI;
     
     mapping (uint => StakeDetails) private stakes;
     uint private stakes_count = 1;
-    uint public total_staked = 0;
     uint public pending_payments = 0;
 
     event RewardAdded(uint amount);
@@ -189,6 +189,13 @@ contract ModuleX is IModuleX, Ownable
         require(xCREDI.balanceOf(address(this)) >= amount + pending_payments, "ModuleX:Insufficient balance!");
         xCREDI.safeTransfer(to, amount);
         emit RewardWithdrawn(to, amount);
+    }
+
+    function setDifficulty(uint _DIFFICULTY, uint _DIFFICULTY_INTERVAL, uint _total_staked) external onlyOwner
+    {
+        DIFFICULTY = _DIFFICULTY;
+        DIFFICULTY_INTERVAL = _DIFFICULTY_INTERVAL;
+        total_staked = _total_staked;
     }
 
     function stop() external onlyOwner

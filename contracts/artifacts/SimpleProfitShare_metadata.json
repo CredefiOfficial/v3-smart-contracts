@@ -814,7 +814,7 @@
 		},
 		"optimizer": {
 			"enabled": true,
-			"runs": 500
+			"runs": 999
 		},
 		"remappings": []
 	},
@@ -948,11 +948,11 @@
 			]
 		},
 		"contracts/SimpleProfitShare.sol": {
-			"keccak256": "0x6bb5c5d7bcfbe7115712a884216632b8f80500126cf64488dc99369a52302a4c",
+			"keccak256": "0x83527cc94d371024b35e2b82878a587608bee1ef950cca8ee4c53c264dcb1ded",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://39dca9fcad6dc9b3a17024f949d2f7f73f78c32be2f1d03e5fb61c5be1c6c02a",
-				"dweb:/ipfs/QmS44L34pgTUv2R6vgJAS6Dm6reEEFsV6gdy8ivdDfn9aZ"
+				"bzz-raw://e0258e75bd552848abedd08a5870d8d10d5518c616417f9773ffb3077a18efd0",
+				"dweb:/ipfs/QmVaVGif7DJVou6Bv3UZ8yi4SxmNVC2k3QuQDRuh6wNU1y"
 			]
 		}
 	},

@@ -577,7 +577,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contracts/ModuleX.sol": "ModuleX"
+			"contracts/ModuleX_immutable.sol": "ModuleX"
 		},
 		"evmVersion": "prague",
 		"libraries": {},
@@ -586,7 +586,7 @@
 		},
 		"optimizer": {
 			"enabled": true,
-			"runs": 500
+			"runs": 999
 		},
 		"remappings": []
 	},
@@ -655,12 +655,12 @@
 				"dweb:/ipfs/QmfDRc7pxfaXB2Dh9np5Uf29Na3pQ7tafRS684wd3GLjVL"
 			]
 		},
-		"contracts/ModuleX.sol": {
-			"keccak256": "0x868b1bbae8e53bc4f62ee66ff1aecf4f0b66659fb963f22a20798b23adbd3929",
+		"contracts/ModuleX_immutable.sol": {
+			"keccak256": "0x81c41ce24fc3e3715d32ac1c0c6c9550dbeb6ce41fe36feca7646990e0aabcad",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://3c3ac5c72006c0a80229df553f1f89566a6be1a0837004813a390a6d403aba09",
-				"dweb:/ipfs/QmNVfFacmGH2rXDUSerdpbbNd6ZwL2gmYGCpawBaL3HkB2"
+				"bzz-raw://b2df32b6ae85c36549eff798b58593c10bf1ce45ef4b82e64929bf4696f3b012",
+				"dweb:/ipfs/QmYMFGRdUK1yZ3pV6MQ87TyoyiigEGsdj84sSjVcYUouXo"
 			]
 		},
 		"contracts/interface/IModuleX.sol": {

@@ -16,13 +16,13 @@ contract P2PLending is IP2PLending, Ownable, ERC1155Supply, ReentrancyGuard
     using SafeERC20 for IERC20;
     
     bool public stopped = false;
-    uint96 constant public CLAIM_PERIOD = 1 days;
+    uint96 constant public CLAIM_PERIOD = 2 days;
     uint8 constant public RATIOS_DECIMALS = 4;
     uint96 constant public WITHDRAW_COOLDOWN = 30 seconds;
     uint public LOT_SIZE = 10; // 10 USDC in wei after constructor
     uint32 public MIN_LOTS_AMOUNT = 10;
     uint32 public MIN_DURATION = 7; // days
-    uint32 public MAX_DURATION = 730; // days
+    uint32 public MAX_DURATION = 365; // days
     uint32 public MIN_FILL_DURATION = 1; // days   
     uint32 public MIN_APY = 100; // 100 = 1%
     uint32 public MAX_APY = 100000; // 1000% 
