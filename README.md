@@ -1,4 +1,23 @@
 # Credefi v3 smart contracts
+## Ethereum mainnet (ChainId 1) & BSC Mainnet (ChainId 56) Addresses
+### Defi Platform
+- CREDIWhale [0x4a8a0d46fF0C837e2FACB8C194A8Eca377c43746](https://etherscan.io/address/0x4a8a0d46fF0C837e2FACB8C194A8Eca377c43746)  [BSCSCAN](https://bscscan.com/address/0x4a8a0d46fF0C837e2FACB8C194A8Eca377c43746)
+- ModuleX [0xdebB1411896e15f1F17013e18444ADa1795A3ACf](https://etherscan.io/address/0xdebB1411896e15f1F17013e18444ADa1795A3ACf)  [BSCSCAN](https://bscscan.com/address/0xdebB1411896e15f1F17013e18444ADa1795A3ACf)
+- PriceData [0xFec50CB4921f014514C65E6b451C755d09040900](https://etherscan.io/address/0xFec50CB4921f014514C65E6b451C755d09040900)  [BSCSCAN](https://bscscan.com/address/0xFec50CB4921f014514C65E6b451C755d09040900)
+- LPStaking [0x9127B1BC2AF636A89F63cd3f0ab4A7106B391CED](https://etherscan.io/address/0x9127B1BC2AF636A89F63cd3f0ab4A7106B391CED)  [BSCSCAN](https://bscscan.com/address/0x9127B1BC2AF636A89F63cd3f0ab4A7106B391CED)
+- MarketingStaking [0xadb05cA454AA6591611f776ebA173B279f859326](https://etherscan.io/address/0xadb05cA454AA6591611f776ebA173B279f859326)  [BSCSCAN](https://bscscan.com/address/0xadb05cA454AA6591611f776ebA173B279f859326)
+- ProfitShare [0xF33EAade8aaF3E0cE9FDbb10cc84574c95492d32](https://etherscan.io/address/0xF33EAade8aaF3E0cE9FDbb10cc84574c95492d32)  [BSCSCAN](https://bscscan.com/address/0xF33EAade8aaF3E0cE9FDbb10cc84574c95492d32)
+- P2PLending tCREDI [0xB8B1eACb7a95e2e75425CAB0c8E2C4408B0F27a5](https://etherscan.io/address/0xB8B1eACb7a95e2e75425CAB0c8E2C4408B0F27a5)  [BSCSCAN](https://bscscan.com/address/0xB8B1eACb7a95e2e75425CAB0c8E2C4408B0F27a5)
+- P2PLending txCREDI [0x00c4d9029DfF99433f0095135c306Ff53bBD9AbC](https://etherscan.io/address/0x00c4d9029DfF99433f0095135c306Ff53bBD9AbC)  [BSCSCAN](https://bscscan.com/address/0x00c4d9029DfF99433f0095135c306Ff53bBD9AbC)
+
+### Tokens
+- CREDI [0xaE6e307c3Fe9E922E5674DBD7F830Ed49c014c6B](https://etherscan.io/address/0xaE6e307c3Fe9E922E5674DBD7F830Ed49c014c6B)
+- xCREDI [0x3bBFb303842dD4a76Da4C927Be644E9cf3170afD](https://etherscan.io/address/0x3bBFb303842dD4a76Da4C927Be644E9cf3170afD)
+
+- BEP20 CREDI [0x2235e79086dd23135119366da45851c741874e5B](https://bscscan.com/address/0x2235e79086dd23135119366da45851c741874e5B)
+- BEP20 xCREDI [0xbA85AB4Dc5409085bcED6a71a7FBB60f5C83F4Fb](https://bscscan.com/address/0xbA85AB4Dc5409085bcED6a71a7FBB60f5C83F4Fb)
+
+
 ## BSC Testnet (ChainId 97) Addresses
 ### Defi Platform
 - CREDIWhale [0x0FBCbBDE2CE5782E90Cfa51eCF2d2415820e0196](https://testnet.bscscan.com/address/0x0FBCbBDE2CE5782E90Cfa51eCF2d2415820e0196)
