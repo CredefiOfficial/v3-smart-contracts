@@ -2140,7 +2140,7 @@
 		"compilationTarget": {
 			"contracts_prod/P2PLending.sol": "P2PLending"
 		},
-		"evmVersion": "prague",
+		"evmVersion": "london",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"

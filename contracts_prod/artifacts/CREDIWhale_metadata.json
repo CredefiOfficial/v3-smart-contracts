@@ -186,7 +186,7 @@
 		"compilationTarget": {
 			"contracts_prod/CREDIWhale.sol": "CREDIWhale"
 		},
-		"evmVersion": "prague",
+		"evmVersion": "london",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"

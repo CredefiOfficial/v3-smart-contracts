@@ -798,7 +798,7 @@
 		"compilationTarget": {
 			"contracts_prod/PriceData.sol": "PriceData"
 		},
-		"evmVersion": "prague",
+		"evmVersion": "london",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"

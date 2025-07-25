@@ -851,7 +851,7 @@
 		"compilationTarget": {
 			"contracts_prod/ProfitShare.sol": "ProfitShare"
 		},
-		"evmVersion": "prague",
+		"evmVersion": "london",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"

@@ -9,6 +9,11 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import {Arrays} from "@openzeppelin/contracts/utils/Arrays.sol";
 import "./interface/IModuleX.sol";
 
+interface ISWAPLIBRARY 
+{
+    function swap(address to, uint amountIn, bytes calldata options) external returns(uint amountOut);
+}
+
 contract ProfitShare is Ownable, ReentrancyGuard
 {
     using SafeERC20 for IERC20;
@@ -52,6 +57,7 @@ contract ProfitShare is Ownable, ReentrancyGuard
     mapping (address => UserInfo) private users;
     mapping (address => mapping (uint => StakeDetails)) private stakes;
     PoolInfo public pool;
+    address public SWAP_LIBRARY = address(0);
 
     event RewardAdded(uint amount);
     event RewardWithdrawn(address indexed to, uint amount);
@@ -162,12 +168,20 @@ contract ProfitShare is Ownable, ReentrancyGuard
         emit StakeWithdrawn(stake_id, _msgSender(), amount);       
     }
 
-    function _claim(address owner) internal 
+    function _claim(address owner, bytes calldata options) internal 
     {
         UserInfo storage user = users[owner];
         if(user.reward_amount > 0)
         {
-            pool.rewards_token.safeTransfer(owner, user.reward_amount);            
+            if(SWAP_LIBRARY != address(0))
+            {
+                pool.rewards_token.approve(SWAP_LIBRARY, user.reward_amount);
+                require(ISWAPLIBRARY(SWAP_LIBRARY).swap(owner, user.reward_amount, options) > 0, "ProfitShare:Swap failed");
+            }
+            else 
+            {
+                pool.rewards_token.safeTransfer(owner, user.reward_amount);
+            }         
             emit RewardPaid(owner, user.reward_amount);
             user.reward_amount = 0;
         }
@@ -215,7 +229,7 @@ contract ProfitShare is Ownable, ReentrancyGuard
         _stake(_msgSender(), lock_period, new_stake_amount, stake_id);  
     }
 
-    function unstake(uint stake_id, bool claim_rewards) external nonReentrant validate_stake(_msgSender(), stake_id)
+    function unstake(uint stake_id, bool claim_rewards, bytes calldata options) external nonReentrant validate_stake(_msgSender(), stake_id)
     {
         StakeDetails storage user_stake = stakes[_msgSender()][stake_id];
         require(time_now() >= user_stake.maturity, "ProfitShare:Early Withdrawal is not permitted!");
@@ -228,25 +242,25 @@ contract ProfitShare is Ownable, ReentrancyGuard
         _unstake(_msgSender(), user_stake.stake_amount, stake_id);
         if(claim_rewards)
         {
-            _claim(_msgSender());
+            _claim(_msgSender(), options);
         }
     }
 
-    function unstakePerpetual(uint amount, bool claim_rewards) external nonReentrant
+    function unstakePerpetual(uint amount, bool claim_rewards, bytes calldata options) external nonReentrant
     {
         require(amount > 0, "Cannot unstake 0!");
         pool.staking_token.safeTransfer(_msgSender(), amount);
         _unstake(_msgSender(), amount, 0);
         if(claim_rewards)
         {
-            _claim(_msgSender());
+            _claim(_msgSender(), options);
         }
     }
 
-    function claimRewards() external nonReentrant 
+    function claimRewards(bytes calldata options) external nonReentrant 
     {
         update_pool_and_user(_msgSender(), 0, 0);
-        _claim(_msgSender());
+        _claim(_msgSender(), options);
     }
 
     function extendRewards(uint96 duration, uint reward_amount, uint transfer_reward_amount) external onlyOwner
@@ -297,6 +311,11 @@ contract ProfitShare is Ownable, ReentrancyGuard
         xCREDI_tiers_multiplier = Arrays.sort(_mulitpliers);
         require(xCREDI_tiers_threshold[0] == 0 && xCREDI_tiers_multiplier[0] >= multiplier_BASE);
         emit SetXTierMultipliers(xCREDI_tiers_threshold, xCREDI_tiers_multiplier);
+    }
+
+    function setSwapLibraryAddress(address _SWAP_LIBRARY) external onlyOwner
+    {
+        SWAP_LIBRARY = _SWAP_LIBRARY;
     }
 
     function getUserInfo(address owner) external view 

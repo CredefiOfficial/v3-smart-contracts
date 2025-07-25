@@ -730,7 +730,7 @@
 		"compilationTarget": {
 			"contracts_prod/LPStaking.sol": "LPStaking"
 		},
-		"evmVersion": "prague",
+		"evmVersion": "london",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"

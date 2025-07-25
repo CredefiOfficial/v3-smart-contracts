@@ -644,7 +644,7 @@
 		"compilationTarget": {
 			"contracts_prod/MarketingStaking.sol": "MarketingStaking"
 		},
-		"evmVersion": "prague",
+		"evmVersion": "london",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
